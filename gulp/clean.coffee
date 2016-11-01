@@ -3,7 +3,7 @@ module.exports = ($) =>
 
   @gulp.task 'clean', =>
     removables = [
-      './app/**/*.js',
+      './app/**/*.js'
     ]
 
     @del.sync removables

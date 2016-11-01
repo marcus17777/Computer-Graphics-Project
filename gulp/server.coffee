@@ -4,10 +4,11 @@ module.exports = ($) ->
   fs = require('fs')
   proxyMiddleware = require 'http-proxy-middleware'
 
-  fallback = @config.app.indexHtml
-  root     = @config.app.root
-
   @gulp.task 'serve', ['build', 'watch'], =>
+
+    fallback = if @config.isProduction then @config.dist.index else @config.app.indexHtml
+    root     = if @config.isProduction then @config.dist.root  else @config.app.root
+
     @connect.server
       root: [root, './public']
       port: 3000

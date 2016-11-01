@@ -1,12 +1,43 @@
+---
 isProduction:   false
+isDebug:        false
+
+dist:
+  root: dist
+  lib:
+    root: dist/lib
+
+  index: dist/index.html
+  manifest: dist/rev-manifest.json
+  appJs: dist/app.js
+  appCss: dist/app.css
+  libJs:  dist/lib.js
+  libCss: dist/lib.css
+  injectables:
+    - dist/lib-*.{js,css}
+    - dist/app-*.{js,css}
 
 app:
   root:       app
   dest:       './'
   coffee:     app/**/!(*Spec).coffee
-  js:         app/!(lib)/**/*.js
+  js:         app/!(lib)/**/*.js*]
   compiledJs: /app-*.js
+  css:        [/!(lib)/**/*.css, /app-*.css]
+  html:       app/**/*.html
   indexHtml:  app/index.html
+  locales:    app/**/??.json
+  images:     [app/**/*.png, app/**/*.ico]
+  fonts:      app/lib/*.{ttf,woff,woff2,eot,svg}
   injectables:
-    - app/lib/**.*js
+    - app/lib/*.css
+    - app/lib/**/*.js
+    - app/**/*.css
+    - app/helpers.js
+    - app/constants.js
     - app/**/*.js
+
+lib:
+  root: app/lib
+  js:   [/jquery.js, /angular.js, /angular-translate.js, /bootstrap.js, /bootstrap-select.js, '/**/*.js']
+  css:  ['/**/*.css']

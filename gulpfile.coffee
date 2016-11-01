@@ -24,10 +24,14 @@
   @emit 'end'
 
 require('./gulp/clean')(@)
+require('./gulp/revisions')(@)
 require('./gulp/scripts')(@)
 require('./gulp/inject')(@)
 require('./gulp/build')(@)
 require('./gulp/server')(@)
 
+
+@gulp.task 'set:production',   => @config.isProduction   = true
+@gulp.task 'set:debug',        => @config.isDebug        = true
 
 @gulp.task 'default', ['build', 'serve']
