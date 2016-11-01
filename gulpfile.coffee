@@ -24,7 +24,6 @@
   @emit 'end'
 
 require('./gulp/clean')(@)
-require('./gulp/revisions')(@)
 require('./gulp/scripts')(@)
 require('./gulp/inject')(@)
 require('./gulp/build')(@)

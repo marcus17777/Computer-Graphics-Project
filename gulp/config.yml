@@ -8,7 +8,6 @@ dist:
     root: dist/lib
 
   index: dist/index.html
-  manifest: dist/rev-manifest.json
   appJs: dist/app.js
   appCss: dist/app.css
   libJs:  dist/lib.js
@@ -26,9 +25,6 @@ app:
   css:        [/!(lib)/**/*.css, /app-*.css]
   html:       app/**/*.html
   indexHtml:  app/index.html
-  locales:    app/**/??.json
-  images:     [app/**/*.png, app/**/*.ico]
-  fonts:      app/lib/*.{ttf,woff,woff2,eot,svg}
   injectables:
     - app/lib/*.css
     - app/lib/**/*.js
@@ -39,5 +35,5 @@ app:
 
 lib:
   root: app/lib
-  js:   [/jquery.js, /angular.js, /angular-translate.js, /bootstrap.js, /bootstrap-select.js, '/**/*.js']
-  css:  ['/**/*.css']
+  js:   []
+  css:  []

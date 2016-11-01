@@ -23,7 +23,5 @@ module.exports = ($) ->
       .pipe @if @config.isDebug, @debug title: 'Coffee: output:'
       .pipe @sourcemaps.write()
 
-      .pipe @if @config.isProduction,
-        @gulp.dest(@config.dist.root),
-        @gulp.dest(@config.app.root)
+      .pipe @gulp.dest(@config.app.root)
         .on 'error', @errorHandler
