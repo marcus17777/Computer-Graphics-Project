@@ -1,0 +1,12 @@
+isProduction:   false
+
+app:
+  root:       app
+  dest:       './'
+  coffee:     app/**/!(*Spec).coffee
+  js:         app/!(lib)/**/*.js
+  compiledJs: /app-*.js
+  indexHtml:  app/index.html
+  injectables:
+    - app/lib/**.*js
+    - app/**/*.js
