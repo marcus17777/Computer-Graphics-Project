@@ -1,2 +1,2 @@
 test: () ->
-  console.log "Hello worldah"
+  console.log "Hello world"
