@@ -1,6 +1,4 @@
 node_modules
-
-app/lib
 app/**/*.js
 dist
 .idea
