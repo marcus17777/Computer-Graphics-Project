@@ -2,12 +2,10 @@
 <html>
 	<head>
 		<title>Computer Graphcis - Task 6.1</title>
-		<!-- <script type="text/javascript" src="three.r80.js"></script> -->
 
-    <!-- inject:js -->
-    <script src="lib/three.r80.js"></script>
-    <script src="a.js"></script>
-    <!-- endinject -->
+		<!-- inject:js -->
+		<script src="lib/three.r80.js"></script>
+		<!-- endinject -->
 
 		<script type="text/javascript">
 
@@ -311,14 +309,8 @@
 				gl_FragColor = vec4(color, 1.0);
 			}
 		</script>
-
-    <script>
-      function testa() {
-        return test();
-      }
-    </script>
 	</head>
-	<body onload="testa()">
+	<body onload="onLoad()">
 		<div id="myCanvasContainer"></div>
 		<div id="statusContainer"></div>
 	</body>
