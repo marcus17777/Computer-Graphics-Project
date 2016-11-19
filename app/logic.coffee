@@ -27,16 +27,16 @@ millis = ->
 toRad = (degree) ->
   Math.PI * 2 * degree / 360
 
-@onLoad = ->
+@onLoad = () ->
   canvasContainer = document.getElementById('myCanvasContainer')
   width = 800
   height = 500
   #Load the Gouraud shader codes
-  gouraudVertexShader = document.getElementById('gouraudVertexShader').textContent
-  gouraudFragmentShader = document.getElementById('gouraudFragmentShader').textContent
+  gouraudVertexShader = @Shaders.gouraudVertexShader
+  gouraudFragmentShader = @Shaders.gouraudFragmentShader
   #Load the Phong shader codes
-  phongVertexShader = document.getElementById('phongVertexShader').textContent
-  phongFragmentShader = document.getElementById('phongFragmentShader').textContent
+  phongVertexShader = @Shaders.phongVertexShader
+  phongFragmentShader = @Shaders.phongFragmentShader
   #Status container element
   statusContainer = document.getElementById('statusContainer')
   renderer = new (THREE.WebGLRenderer)

@@ -6,6 +6,7 @@
 		<!-- inject:js -->
 		<script src="lib/three.r80.js"></script>
 		<script src="logic.js"></script>
+		<script src="shaders.js"></script>
 		<script src="test.js"></script>
 		<!-- endinject -->
 
@@ -17,61 +18,7 @@
 			Three.js provides you with a modelViewMatrix (mat4) and a normalMatrix (mat3) for each vertex of each object.
 			Those transform from the object space to camera space.
 		-->
-		<script id="gouraudVertexShader" type="x-shader/x-vertex">
-			uniform vec3 lightPosition;
-			uniform vec3 color;
-			varying vec3 interpolatedColor;
 
-			void main() {
-				//1. Calculate the vertexPosition in the camera space.
-				//2. Calculate the correct normal in the camera space.
-				//3. Find the direction towards the viewer, normalize.
-				//4. Find the direction towards the light source, normalize.
-
-				//Implement Phong's lighting/reflection model:
-				// - Ambient term you can just add
-				// - Use the values calculated before for the diffuse/Lambertian term
-				// - For Phong's specular, find the reflection of the light ray from the point
-				//   See: https://www.opengl.org/sdk/docs/man/html/reflect.xhtml
-				//   Use a value like 200 for the shininess
-
-				interpolatedColor = color; //Replace this line
-
-				gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
-			}
-		</script>
-		<script id="gouraudFragmentShader" type="x-shader/x-fragment">
-			varying vec3 interpolatedColor;
-
-			void main() {
-				//Nothing fancy here, we already know the color.
-				gl_FragColor = vec4(interpolatedColor, 1.0);
-			}
-		</script>
-
-		<script id="phongVertexShader" type="x-shader/x-vertex">
-			varying vec3 interpolatedPosition; //We interpolate the position
-			varying vec3 interpolatedNormal;   //We interpolate the normal
-
-			void main() {
-				//Find the correct values for the position and the normal in camera space.
-				interpolatedPosition = position; //Replace these 2 lines
-				interpolatedNormal = normal;
-
-				gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
-			}
-		</script>
-		<script id="phongFragmentShader" type="x-shader/x-fragment">
-			uniform vec3 lightPosition;
-			uniform vec3 color;
-			varying vec3 interpolatedPosition;
-			varying vec3 interpolatedNormal;
-
-			void main() {
-				//Do the same Phong's lighting/reflection model calculation that you did in Gouraud vertex shader before.
-				gl_FragColor = vec4(color, 1.0);
-			}
-		</script>
 	</head>
 	<body onload="onLoad()">
 		<div id="myCanvasContainer"></div>
