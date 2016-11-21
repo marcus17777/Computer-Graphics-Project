@@ -7,5 +7,5 @@ module.exports = ($) ->
     root   = @config.app.root
 
     @gulp.src index
-      .pipe @inject assets, ignorePath: root
+      .pipe @inject assets, ignorePath: root, addRootSlash: false
       .pipe @gulp.dest root
