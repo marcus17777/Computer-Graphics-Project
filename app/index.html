@@ -1,27 +1,24 @@
-<!DOCTYPE>
+<!DOCTYPE html>
 <html>
-	<head>
-		<title>Computer Graphcis - Task 6.1</title>
+  <head>
+    <meta charset="utf-8">
+    <title>Computer Graphics</title>
 
-		<!-- inject:js -->
-		<script src="lib/three.r80.js"></script>
-		<script src="logic.js"></script>
-		<script src="shaders.js"></script>
-		<script src="test.js"></script>
-		<!-- endinject -->
+    <!-- inject:js -->
+    <script src="lib/THREE.r82-tweaked.js"></script>
+    <script src="lib/three.ColladaLoader.js"></script>
+    <script src="lib/three.MTLLoader.js"></script>
+    <script src="lib/three.OBJLoader.js"></script>
+    <script src="lib/three.THREEx.KeyboardState.js"></script>
+    <script src="logic.js"></script>
+    <!-- endinject -->
 
-		<!--
-			--Task--
-			Fill the Gouraud and Phong vertex and fragment shaders.
-			When doing the calculations with points, make sure you are in the camera/eye coordinate space.
-			The vertex positions and normals sent (by Three.js) to the vertex shader are initially in the local coordinate space.
-			Three.js provides you with a modelViewMatrix (mat4) and a normalMatrix (mat3) for each vertex of each object.
-			Those transform from the object space to camera space.
-		-->
+    <style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
 
-	</head>
-	<body onload="onLoad()">
-		<div id="myCanvasContainer"></div>
-		<div id="statusContainer"></div>
-	</body>
+  </head>
+  <body onload="onLoad()">
+  </body>
 </html>
