@@ -65,6 +65,14 @@ toRad = (degrees) ->
   container.appendChild stats.domElement
 
 
+  # GUI: For easy variable changing and overall control of the application
+  gui = new dat.GUI
+  gui_parameters = {
+
+  }
+  gui.open()
+
+
   # Light source for our world
   light = new THREE.PointLight 0xffffff
   # light = new THREE.AmbientLight 0x111111

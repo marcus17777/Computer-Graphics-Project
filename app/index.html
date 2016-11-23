@@ -2,8 +2,27 @@
 <html>
 	<head>
 		<title>Computer Graphcis - Task 6.1</title>
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				font-family: Monospace;
+				font-weight: bold;
+				background-color: #ccccff;
+				margin: 0px;
+				overflow: hidden;
+			}
+
+			.appContainer {
+				z-index: 1;
+				position: absolute;
+				left:0px;
+				top:0px
+			}
+		</style>
 
 		<!-- inject:js -->
+		<script src="lib/DAT.GUI.min.js"></script>
+		<script src="lib/Detector.js"></script>
 		<script src="lib/Stats.js"></script>
 		<script src="lib/THREE.r82-tweaked.js"></script>
 		<script src="lib/THREEx.FullScreen.js"></script>
