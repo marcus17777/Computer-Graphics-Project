@@ -1,0 +1,34 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<title>Computer Graphcis - Task 6.1</title>
+
+		<!-- inject:js -->
+		<script src="lib/Stats.js"></script>
+		<script src="lib/THREE.r82-tweaked.js"></script>
+		<script src="lib/THREEx.FullScreen.js"></script>
+		<script src="lib/THREEx.KeyboardState.js"></script>
+		<script src="lib/THREEx.WindowResize.js"></script>
+		<script src="lib/three.ColladaLoader.js"></script>
+		<script src="lib/three.MTLLoader.js"></script>
+		<script src="lib/three.OBJLoader.js"></script>
+		<script src="lib/three.OrbitControls.js"></script>
+		<script src="logic.js"></script>
+		<script src="shaders.js"></script>
+		<!-- endinject -->
+
+		<!--
+			--Task--
+			Fill the Gouraud and Phong vertex and fragment shaders.
+			When doing the calculations with points, make sure you are in the camera/eye coordinate space.
+			The vertex positions and normals sent (by Three.js) to the vertex shader are initially in the local coordinate space.
+			Three.js provides you with a modelViewMatrix (mat4) and a normalMatrix (mat3) for each vertex of each object.
+			<Th></Th>ose transform from the object space to camera space.
+		-->
+
+	</head>
+	<body onload="init()">
+		<div id="appContainer"></div>
+		<div id="statusContainer"></div>
+	</body>
+</html>
