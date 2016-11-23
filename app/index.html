@@ -118,12 +118,12 @@
 
 				var mtlLoader = new THREE.MTLLoader();
 				mtlLoader.crossOrigin = 'Anonymous';
-				mtlLoader.load('http://cglearn.codelight.eu/files/course/9/models/chopper/chopper.mtl',
+				mtlLoader.load('models/reket.mtl',
 					function(materials) {
 					var objLoader = new THREE.OBJLoader();
 					objLoader.crossOrigin = 'Anonymous';
 					objLoader.setMaterials(materials);
-					objLoader.load('http://cglearn.codelight.eu/files/course/9/models/chopper/chopper.obj', function (object) {
+					objLoader.load('models/reket.obj', function (object) {
 						object.position.x = - 60;
 	          object.rotation.x = 20* Math.PI / 180;
 	          object.rotation.z = 20* Math.PI / 180;
