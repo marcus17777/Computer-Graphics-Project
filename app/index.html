@@ -4,11 +4,15 @@
 		<title>Computer Graphcis - Task 6.1</title>
 
 		<!-- inject:js -->
+		<script src="lib/Stats.js"></script>
 		<script src="lib/THREE.r82-tweaked.js"></script>
+		<script src="lib/THREEx.FullScreen.js"></script>
+		<script src="lib/THREEx.KeyboardState.js"></script>
+		<script src="lib/THREEx.WindowResize.js"></script>
 		<script src="lib/three.ColladaLoader.js"></script>
 		<script src="lib/three.MTLLoader.js"></script>
 		<script src="lib/three.OBJLoader.js"></script>
-		<script src="lib/three.THREEx.KeyboardState.js"></script>
+		<script src="lib/three.OrbitControls.js"></script>
 		<script src="logic.js"></script>
 		<script src="shaders.js"></script>
 		<!-- endinject -->
@@ -23,7 +27,7 @@
 		-->
 
 	</head>
-	<body onload="onLoad()">
+	<body onload="init()">
 		<div id="appContainer"></div>
 		<div id="statusContainer"></div>
 	</body>
