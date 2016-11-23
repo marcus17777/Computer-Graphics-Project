@@ -6,6 +6,7 @@ controls = undefined
 stats = undefined
 keyboard = new THREEx.KeyboardState
 clock = new THREE.Clock
+gui = undefined
 
 # Custom variables
 
@@ -21,37 +22,50 @@ toRad = (degrees) ->
 
 
 @init = () ->
+
+  # Screen specific options
   SCREEN_WIDTH = window.innerWidth
   SCREEN_HEIGHT = window.innerHeight
 
+  # Camera specific options
   VIEW_ANGLE = 45
   ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT
   NEAR = 0.1
   FAR = 20000
 
+  # Scene initialization
   scene = new THREE.Scene
+
+  # Camera initialization
   camera = new THREE.PerspectiveCamera VIEW_ANGLE, ASPECT, NEAR, FAR
   camera.position.set 0, 150, 400
   camera.lookAt scene.position
   scene.add camera
 
+  # Renderer initialization
   renderer = new THREE.WebGLRenderer antialias: true
   renderer.setSize SCREEN_WIDTH, SCREEN_HEIGHT
 
+  # Appcontainer: an element in html document that holds our 3D application
   container = document.getElementById('appContainer')
   container.appendChild renderer.domElement
 
+  # Window handlers
   THREEx.WindowResize renderer, camera
   THREEx.FullScreen.bindKey charCode: 'm'.charCodeAt(0)
 
+  # Controls for moving around using mouse.
   controls = new THREE.OrbitControls camera, renderer.domElement
 
+  # Stats: FPS counter and more
   stats = new Stats
   stats.domElement.style.position = 'absolute'
   stats.domElement.style.bottom = '0px'
   stats.domElement.style.zIndex = 100
   container.appendChild stats.domElement
 
+
+  # Light source for our world
   light = new THREE.PointLight 0xffffff
   # light = new THREE.AmbientLight 0x111111
   light.position.set 0, 250, 0
