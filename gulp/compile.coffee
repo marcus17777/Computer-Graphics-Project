@@ -9,17 +9,17 @@ module.exports = ($) ->
 
       .pipe @order @config.app.jsOrder
 
-      .pipe @if @config.isDebug, @debug title: 'Coffee:  input:'
+      .pipe @if @config.debug, @debug title: 'Coffee:  input:'
       .pipe @sourcemaps.init()
 
       .pipe ngClassify(@config.ngClassifyOptions).on 'error', @errorHandler
       .pipe @coffee().on 'error', @errorHandler
 
-      .pipe @if @config.isProduction, @concat 'app.js'
+      .pipe @if @config.production, @concat 'app.js'
 
-      .pipe @if @config.isProduction, @rev()
+      .pipe @if @config.production, @rev()
 
-      .pipe @if @config.isDebug, @debug title: 'Coffee: output:'
+      .pipe @if @config.debug, @debug title: 'Coffee: output:'
       .pipe @sourcemaps.write()
 
       .pipe @gulp.dest(@config.app.root)

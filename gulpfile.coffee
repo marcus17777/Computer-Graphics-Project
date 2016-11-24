@@ -16,7 +16,6 @@
 @connect    = require 'gulp-connect'
 @cache      = require 'gulp-cached'
 @order      = require 'gulp-order'
-@uglify     = require 'gulp-uglify'
 @revReplace = require 'gulp-rev-replace'
 
 @errorHandler = (error) ->
@@ -28,7 +27,7 @@ require('./gulp/build')(@)
 require('./gulp/server')(@)
 
 
-@gulp.task 'set:production',   => @config.isProduction   = true
-@gulp.task 'set:debug',        => @config.isDebug        = true
+@gulp.task 'set:production',   => @config.production   = true
+@gulp.task 'set:debug',        => @config.debug        = true
 
 @gulp.task 'default', ['build', 'serve']
