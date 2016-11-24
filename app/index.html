@@ -58,6 +58,7 @@
 			function init() {
 
 				container = document.createElement( 'div' );
+				container.style.cssText = 'cursor: none;';
 				document.body.appendChild( container );
 
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
