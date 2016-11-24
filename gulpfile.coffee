@@ -16,16 +16,13 @@
 @connect    = require 'gulp-connect'
 @cache      = require 'gulp-cached'
 @order      = require 'gulp-order'
-@uglify     = require 'gulp-uglify'
 @revReplace = require 'gulp-rev-replace'
 
 @errorHandler = (error) ->
   console.log error.toString()
   @emit 'end'
 
-require('./gulp/clean')(@)
-require('./gulp/scripts')(@)
-require('./gulp/inject')(@)
+require('./gulp/compile')(@)
 require('./gulp/build')(@)
 require('./gulp/server')(@)
 

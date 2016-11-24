@@ -15,7 +15,6 @@ module.exports = ($) ->
       .pipe ngClassify(@config.ngClassifyOptions).on 'error', @errorHandler
       .pipe @coffee().on 'error', @errorHandler
 
-#      .pipe @if @config.isProduction, @uglify()
       .pipe @if @config.isProduction, @concat 'app.js'
 
       .pipe @if @config.isProduction, @rev()
