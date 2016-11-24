@@ -1,9 +1,6 @@
 module.exports = ($) ->
   require('util')._extend @, $
 
-  fs = require('fs')
-  proxyMiddleware = require 'http-proxy-middleware'
-
   @gulp.task 'serve', ['build', 'watch'], =>
 
     fallback = @config.app.indexHtml

@@ -16,6 +16,7 @@
 @connect    = require 'gulp-connect'
 @cache      = require 'gulp-cached'
 @order      = require 'gulp-order'
+@uglify     = require 'gulp-uglify'
 @revReplace = require 'gulp-rev-replace'
 
 @errorHandler = (error) ->
