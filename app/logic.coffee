@@ -127,3 +127,36 @@ update = () ->
 
   controls.update()
   stats.update()
+
+class UpdatableGroup extends THREE.Group
+  constructor: (objects=[]) ->
+    super()
+    for obj in objects
+      this.add(obj)
+
+  update: (delta) ->
+    for obj in objects
+      obj.update(delta)
+
+
+class MovingMesh extends THREE.Mesh
+  constructor: (geometry, material) ->
+    super(geometry, material)
+    @speed = {
+      'x': 0.0,
+      'y': 0.0,
+      'z': 0.0,
+    }
+    @rotation_speed = {
+      'x': 0.0,
+      'y': 0.0,
+      'z': 0.0,
+    }
+
+  update: (delta) ->
+    this.position.x += @speed.x * delta
+    this.position.y += @speed.y * delta
+    this.position.z += @speed.z * delta
+    this.rotation.x += @rotation_speed.x * delta
+    this.rotation.y += @rotation_speed.y * delta
+    this.rotation.z += @rotation_speed.z * delta
