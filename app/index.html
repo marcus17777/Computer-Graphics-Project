@@ -118,12 +118,12 @@
 
 				var mtlLoader = new THREE.MTLLoader();
 				mtlLoader.crossOrigin = 'Anonymous';
-				mtlLoader.load('models/reket.mtl',
+				mtlLoader.load('models/reket2.mtl',
 					function(materials) {
 					var objLoader = new THREE.OBJLoader();
 					objLoader.crossOrigin = 'Anonymous';
 					objLoader.setMaterials(materials);
-					objLoader.load('models/reket.obj', function (object) {
+					objLoader.load('models/reket2.obj', function (object) {
 						object.position.x = - 60;
 	          object.rotation.x = 20* Math.PI / 180;
 	          object.rotation.z = 20* Math.PI / 180;
