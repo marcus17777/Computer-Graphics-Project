@@ -1,11 +1,5 @@
-production:   false
-debug:        false
-
 app:
   root:       app
-  coffee:     app/**/!(*Spec).coffee
+  coffee:     app/**/*.coffee
   js:         app/!(lib)/**/*.js*]
   indexHtml:  app/index.html
-  injectables:
-    - app/lib/**/*.js
-    - app/**/*.js
