@@ -1,7 +1,7 @@
 module.exports = ($) ->
   require('util')._extend @, $
 
-  @gulp.task 'coffee', =>
+  @gulp.task 'compile:coffee', =>
     @gulp.src @config.app.coffee
       .pipe @cache('coffee')
 
@@ -14,8 +14,8 @@ module.exports = ($) ->
 
 
   @gulp.task 'clean', =>
-    removables = [
+    to_remove = [
       'app/**/*.js',
       '!app/lib/*'
     ]
-    @del.sync removables
+    @del.sync to_remove

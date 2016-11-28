@@ -2,14 +2,14 @@
 
 @initCannon = () ->
   @world = new CANNON.World
-  world.gravity.set(
+  @world.gravity.set(
     @settings.GRAVITY.x
     @settings.GRAVITY.y
     @settings.GRAVITY.z
   )
 
-  world.broadphase = new CANNON.NaiveBroadphase
-  world.solver.iterations = 10
+  @world.broadphase = new CANNON.NaiveBroadphase
+  @world.solver.iterations = 10
 
   # shape = new CANNON.Box new CANNON.Vec3 1, 1, 1
   # body = new CANNON.Body mass: 1
@@ -25,7 +25,7 @@
                                                       0.3 # restitution
                                                       )
   # We must add the contact materials to the world
-  world.addContactMaterial physicsContactMaterial
+  @world.addContactMaterial physicsContactMaterial
 
 
 

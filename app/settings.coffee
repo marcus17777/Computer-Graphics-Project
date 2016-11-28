@@ -18,7 +18,7 @@
   GRAVITY : {
     'x' : 0
     'y' : 0
-    'z' : 0
+    'z' : -10
   }
   TIMESTEP : 1 / 60
 

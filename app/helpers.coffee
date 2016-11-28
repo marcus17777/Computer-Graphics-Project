@@ -4,7 +4,8 @@ class CANNON.Group
 
   update: () ->
     for obj in this.objects
-      obj.update()
+      if obj.hasOwnProperty 'update'
+        obj.update()
 
   add: (body) ->
     this.objects.push body
