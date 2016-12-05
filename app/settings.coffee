@@ -1,4 +1,7 @@
 @settings = {
+
+  DEBUG: false
+
   # Appcontainer: an element in html document that holds our 3D application
   containerID : 'appContainer'
 
@@ -17,8 +20,8 @@
   ## Cannon.js options
   GRAVITY : {
     'x' : 0
-    'y' : 0
-    'z' : -10
+    'y' : -9.8
+    'z' : 0
   }
   TIMESTEP : 1 / 60
 

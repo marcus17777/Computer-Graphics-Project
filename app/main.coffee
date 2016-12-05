@@ -10,7 +10,10 @@ cannonDebugRenderer = undefined
 
   console.log @scene
   console.log @world
-  cannonDebugRenderer = new THREE.CannonDebugRenderer @scene, @world
+
+
+  if @settings.DEBUG
+    cannonDebugRenderer = new THREE.CannonDebugRenderer @scene, @world
 
   objects = new CANNON.Group
   initGeometry()
@@ -23,7 +26,8 @@ update = () ->
   updateGUI()
   objects.update()
   updatePhysics()
-  cannonDebugRenderer.update()
+  if @settings.DEBUG
+    cannonDebugRenderer.update()
   render()
 
 
@@ -82,10 +86,13 @@ initGeometry = () ->
 
 
   mass = 10
-  size = 3
+  size = 10
   height = 100
   damping = 0.01
   sphereShape = new CANNON.Sphere size
+
+  sphereGeometry = new THREE.SphereGeometry size, 32, 16
+  sphereMaterial = new THREE.MeshLambertMaterial color: 0x8888ff
 
   loader = new THREE.TextureLoader
   groundTexture = loader.load 'images/checkerboard.jpg'
@@ -104,45 +111,53 @@ initGeometry = () ->
     mass: 0
     material: groundMaterial
   groundBody.addShape groundShape
-  # groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), Math.PI / 2)
-  
+  groundBody.quaternion.setFromAxisAngle new CANNON.Vec3(1, 0, 0), -Math.PI / 2
+  # groundBody.position.set(0, 0, 0)
+
   world.addBody groundBody
   objects.add groundBody
-  # demo.addVisual(groundBody)
 
   # Shape on plane
   mat1 = new CANNON.Material
+  mesh1 = new THREE.Mesh sphereGeometry, sphereMaterial
   shapeBody1 = new CANNON.MeshBody
     mass: mass
     material: mat1
-
+    mesh: mesh1
   shapeBody1.addShape sphereShape
-  shapeBody1.position.set 3*size, size, height
+  shapeBody1.position.set 3*size, height, size
   shapeBody1.linearDamping = damping
   world.addBody shapeBody1
   objects.add shapeBody1
+  scene.add mesh1
   # demo.addVisual(shapeBody1)
 
   mat2 = new CANNON.Material
+  mesh2 = new THREE.Mesh sphereGeometry, sphereMaterial
   shapeBody2 = new CANNON.MeshBody
     mass: mass
     material: mat2
+    mesh: mesh2
   shapeBody2.addShape sphereShape
-  shapeBody2.position.set 0, size, height
+  shapeBody2.position.set 0, height, size
   shapeBody2.linearDamping = damping
-  @world.addBody shapeBody2
+  world.addBody shapeBody2
   objects.add shapeBody2
+  scene.add mesh2
   # demo.addVisual(shapeBody2)
 
   mat3 = new CANNON.Material
-  shapeBody3 = new CANNON.Body
+  mesh3 = new THREE.Mesh sphereGeometry, sphereMaterial
+  shapeBody3 = new CANNON.MeshBody
     mass: mass
     material: mat3
-  shapeBody3.addShape(sphereShape)
-  shapeBody3.position.set -3*size - 5, size, height
+    mesh: mesh3
+  shapeBody3.addShape sphereShape
+  shapeBody3.position.set -3*size - 5, height, size
   shapeBody3.linearDamping = damping
   world.addBody shapeBody3
   objects.add shapeBody3
+  scene.add mesh3
   # demo.addVisual(shapeBody3)
 
   # Create contact material behaviour

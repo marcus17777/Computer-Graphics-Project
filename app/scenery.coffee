@@ -42,9 +42,9 @@ viewerPosition = new THREE.Vector3(0.0, 0.0, 8.0)
 
   # Camera initialization
   camera = new THREE.PerspectiveCamera @settings.VIEW_ANGLE, @settings.ASPECT, @settings.NEAR, @settings.FAR
-  # camera.position.set 0, 150, 400
-  camera.position.set 0, -150, 400
-  # camera.lookAt scene.position
+  camera.position.set 0, 150, 400
+  # camera.position.set 0, -150, 400
+  camera.lookAt scene.position
   scene.add camera
 
   # Renderer initialization
