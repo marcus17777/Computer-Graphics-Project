@@ -97,9 +97,9 @@ initGeometry = () ->
   loader = new THREE.TextureLoader
   groundTexture = loader.load 'images/checkerboard.jpg'
   groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping
-  groundTexture.repeat.set 10, 10
+  groundTexture.repeat.set 100, 100
 
-  groundGeometry = new THREE.PlaneGeometry 1000, 1000, 1, 1
+  groundGeometry = new THREE.PlaneGeometry 10000, 10000, 1, 1
   groundMaterial = new THREE.MeshBasicMaterial map: groundTexture, side: THREE.DoubleSide
   groundMesh = new THREE.Mesh groundGeometry, groundMaterial
   scene.add groundMesh
