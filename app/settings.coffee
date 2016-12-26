@@ -1,4 +1,4 @@
-@settings = {
+@Game.settings = {
 
   DEBUG: false
 
@@ -26,8 +26,3 @@
   TIMESTEP : 1 / 60
 
 }
-
-settings.init = () ->
-  settings.ASPECT = settings.SCREEN_WIDTH / settings.SCREEN_HEIGHT
-  settings.container = document.getElementById(settings.containerID)
-  delete settings.init

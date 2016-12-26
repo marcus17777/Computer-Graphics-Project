@@ -1,9 +1,11 @@
-objects = undefined
-cannonDebugRenderer = undefined
+class @Game
+  constructor: () ->
+    objects = undefined
+    cannonDebugRenderer = undefined
 
-@init = () ->
+
+@Game.init = () ->
   console.log "init"
-  @settings.init()
   @initThree()
   @initCannon()
   @initGUI()
@@ -13,26 +15,26 @@ cannonDebugRenderer = undefined
 
 
   if @settings.DEBUG
-    cannonDebugRenderer = new THREE.CannonDebugRenderer @scene, @world
+    @cannonDebugRenderer = new THREE.CannonDebugRenderer @scene, @world
 
-  objects = new CANNON.Group
-  initGeometry()
+  @objects = new CANNON.Group
+  @initGeometry()
 
-  update()
+  @update()
 
 
-update = () ->
-  requestAnimationFrame update
-  updateGUI()
-  objects.update()
-  updatePhysics()
+@Game.update = () ->
+  requestAnimationFrame () => @update()
+  @updateGUI()
+  @objects.update()
+  @updatePhysics()
   if @settings.DEBUG
-    cannonDebugRenderer.update()
-  render()
+    @cannonDebugRenderer.update()
+  @render()
 
 
-initGeometry = () ->
-  console.log objects
+@Game.initGeometry = () ->
+  console.log @objects
 
   # Initialize sky
   # skyBoxGeometry = new THREE.CubeGeometry 10000, 10000, 10000
@@ -102,7 +104,7 @@ initGeometry = () ->
   groundGeometry = new THREE.PlaneGeometry 10000, 10000, 1, 1
   groundMaterial = new THREE.MeshBasicMaterial map: groundTexture, side: THREE.DoubleSide
   groundMesh = new THREE.Mesh groundGeometry, groundMaterial
-  scene.add groundMesh
+  @scene.add groundMesh
 
   groundMaterial = new CANNON.Material
   groundShape = new CANNON.Plane
@@ -114,8 +116,8 @@ initGeometry = () ->
   groundBody.quaternion.setFromAxisAngle new CANNON.Vec3(1, 0, 0), -Math.PI / 2
   # groundBody.position.set(0, 0, 0)
 
-  world.addBody groundBody
-  objects.add groundBody
+  @world.addBody groundBody
+  @objects.add groundBody
 
   # Shape on plane
   mat1 = new CANNON.Material
@@ -127,10 +129,9 @@ initGeometry = () ->
   shapeBody1.addShape sphereShape
   shapeBody1.position.set 3*size, height, size
   shapeBody1.linearDamping = damping
-  world.addBody shapeBody1
-  objects.add shapeBody1
-  scene.add mesh1
-  # demo.addVisual(shapeBody1)
+  @world.addBody shapeBody1
+  @objects.add shapeBody1
+  @scene.add mesh1
 
   mat2 = new CANNON.Material
   mesh2 = new THREE.Mesh sphereGeometry, sphereMaterial
@@ -141,10 +142,9 @@ initGeometry = () ->
   shapeBody2.addShape sphereShape
   shapeBody2.position.set 0, height, size
   shapeBody2.linearDamping = damping
-  world.addBody shapeBody2
-  objects.add shapeBody2
-  scene.add mesh2
-  # demo.addVisual(shapeBody2)
+  @world.addBody shapeBody2
+  @objects.add shapeBody2
+  @scene.add mesh2
 
   mat3 = new CANNON.Material
   mesh3 = new THREE.Mesh sphereGeometry, sphereMaterial
@@ -155,10 +155,9 @@ initGeometry = () ->
   shapeBody3.addShape sphereShape
   shapeBody3.position.set -3*size - 5, height, size
   shapeBody3.linearDamping = damping
-  world.addBody shapeBody3
-  objects.add shapeBody3
-  scene.add mesh3
-  # demo.addVisual(shapeBody3)
+  @world.addBody shapeBody3
+  @objects.add shapeBody3
+  @scene.add mesh3
 
   # Create contact material behaviour
   mat1_ground = new CANNON.ContactMaterial groundMaterial, mat1,
@@ -171,6 +170,6 @@ initGeometry = () ->
     friction: 0.0
     restitution: 0.9
 
-  world.addContactMaterial mat1_ground
-  world.addContactMaterial mat2_ground
-  world.addContactMaterial mat3_ground
+  @world.addContactMaterial mat1_ground
+  @world.addContactMaterial mat2_ground
+  @world.addContactMaterial mat3_ground

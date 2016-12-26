@@ -1,6 +1,6 @@
-@world = undefined
+@Game.world = undefined
 
-@initCannon = () ->
+@Game.initCannon = () ->
   @world = new CANNON.World
   @world.gravity.set(
     @settings.GRAVITY.x
@@ -30,7 +30,7 @@
 
 
 
-@updatePhysics = () ->
+@Game.updatePhysics = () ->
   @world.step @settings.TIMESTEP
 
 

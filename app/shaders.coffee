@@ -1,12 +1,12 @@
-@Shaders = {
+@Game.Shaders = {
 
 }
 
 
-@Shaders.phongVertexShader = ""
+@Game.Shaders.phongVertexShader = ""
 
-@Shaders.phongFragmentShader = ""
+@Game.Shaders.phongFragmentShader = ""
 
-@Shaders.gouraudVertexShader = ""
+@Game.Shaders.gouraudVertexShader = ""
 
-@Shaders.gouraudFragmentShader= ""
+@Game.Shaders.gouraudFragmentShader= ""

@@ -21,7 +21,6 @@
 		</style>
 
 		<!-- inject:js -->
-		<script src="settings.js"></script>
 		<script src="lib/DAT.GUI.min.js"></script>
 		<script src="lib/Detector.js"></script>
 		<script src="lib/Stats.js"></script>
@@ -35,11 +34,12 @@
 		<script src="lib/three.MTLLoader.js"></script>
 		<script src="lib/three.OBJLoader.js"></script>
 		<script src="lib/three.OrbitControls.js"></script>
-		<script src="physics.js"></script>
-		<script src="helpers.js"></script>
-		<script src="scenery.js"></script>
-		<script src="shaders.js"></script>
 		<script src="main.js"></script>
+		<script src="helpers.js"></script>
+		<script src="physics.js"></script>
+		<script src="scenery.js"></script>
+		<script src="settings.js"></script>
+		<script src="shaders.js"></script>
 		<!-- endinject -->
 
 		<!--
@@ -52,7 +52,7 @@
 		-->
 
 	</head>
-	<body onload="init()">
+	<body onload="window.Game.init()">
 		<div id="appContainer"></div>
 		<div id="statusContainer"></div>
 	</body>
