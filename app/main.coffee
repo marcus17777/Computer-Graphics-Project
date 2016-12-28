@@ -133,43 +133,43 @@ class @Game
   @objects.add shapeBody1
   @scene.add mesh1
 
-  mat2 = new CANNON.Material
-  mesh2 = new THREE.Mesh sphereGeometry, sphereMaterial
-  shapeBody2 = new CANNON.MeshBody
-    mass: mass
-    material: mat2
-    mesh: mesh2
-  shapeBody2.addShape sphereShape
-  shapeBody2.position.set 0, height, size
-  shapeBody2.linearDamping = damping
-  @world.addBody shapeBody2
-  @objects.add shapeBody2
-  @scene.add mesh2
-
-  mat3 = new CANNON.Material
-  mesh3 = new THREE.Mesh sphereGeometry, sphereMaterial
-  shapeBody3 = new CANNON.MeshBody
-    mass: mass
-    material: mat3
-    mesh: mesh3
-  shapeBody3.addShape sphereShape
-  shapeBody3.position.set -3*size - 5, height, size
-  shapeBody3.linearDamping = damping
-  @world.addBody shapeBody3
-  @objects.add shapeBody3
-  @scene.add mesh3
+  # mat2 = new CANNON.Material
+  # mesh2 = new THREE.Mesh sphereGeometry, sphereMaterial
+  # shapeBody2 = new CANNON.MeshBody
+  #   mass: mass
+  #   material: mat2
+  #   mesh: mesh2
+  # shapeBody2.addShape sphereShape
+  # shapeBody2.position.set 0, height, size
+  # shapeBody2.linearDamping = damping
+  # @world.addBody shapeBody2
+  # @objects.add shapeBody2
+  # @scene.add mesh2
+  #
+  # mat3 = new CANNON.Material
+  # mesh3 = new THREE.Mesh sphereGeometry, sphereMaterial
+  # shapeBody3 = new CANNON.MeshBody
+  #   mass: mass
+  #   material: mat3
+  #   mesh: mesh3
+  # shapeBody3.addShape sphereShape
+  # shapeBody3.position.set -3*size - 5, height, size
+  # shapeBody3.linearDamping = damping
+  # @world.addBody shapeBody3
+  # @objects.add shapeBody3
+  # @scene.add mesh3
 
   # Create contact material behaviour
   mat1_ground = new CANNON.ContactMaterial groundMaterial, mat1,
     friction: 0.0
     restitution: 0.0
-  mat2_ground = new CANNON.ContactMaterial groundMaterial, mat2,
-    friction: 0.0
-    restitution: 0.7
-  mat3_ground = new CANNON.ContactMaterial groundMaterial, mat3,
-    friction: 0.0
-    restitution: 0.9
+  # mat2_ground = new CANNON.ContactMaterial groundMaterial, mat2,
+  #   friction: 0.0
+  #   restitution: 0.7
+  # mat3_ground = new CANNON.ContactMaterial groundMaterial, mat3,
+  #   friction: 0.0
+  #   restitution: 0.9
 
   @world.addContactMaterial mat1_ground
-  @world.addContactMaterial mat2_ground
-  @world.addContactMaterial mat3_ground
+  # @world.addContactMaterial mat2_ground
+  # @world.addContactMaterial mat3_ground
