@@ -23,9 +23,7 @@
 
   # GUI: For easy variable changing and overall control of the application
   @gui = new dat.GUI
-  @gui_parameters = {
-
-  }
+  @gui_parameters = {}
   @gui.open()
 
 
