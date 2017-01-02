@@ -18,12 +18,14 @@
   @stats.domElement.style.position = 'absolute'
   @stats.domElement.style.bottom = '0px'
   @stats.domElement.style.zIndex = 100
-  document.getElementById(@settings.containerID).append @stats.domElement
+  document.getElementById(@settings.containerID).appendChild @stats.domElement
 
 
   # GUI: For easy variable changing and overall control of the application
   @gui = new dat.GUI
-  @gui_parameters = {}
+  @gui_parameters = {
+
+  }
   @gui.open()
 
 
