@@ -133,18 +133,18 @@ class @Game
   @objects.add shapeBody1
   @scene.add mesh1
 
-  # mat2 = new CANNON.Material
-  # mesh2 = new THREE.Mesh sphereGeometry, sphereMaterial
-  # shapeBody2 = new CANNON.MeshBody
-  #   mass: mass
-  #   material: mat2
-  #   mesh: mesh2
-  # shapeBody2.addShape sphereShape
-  # shapeBody2.position.set 0, height, size
-  # shapeBody2.linearDamping = damping
-  # @world.addBody shapeBody2
-  # @objects.add shapeBody2
-  # @scene.add mesh2
+  mat2 = new CANNON.Material
+  mesh2 = new THREE.Mesh sphereGeometry, sphereMaterial
+  shapeBody2 = new CANNON.MeshBody
+    mass: 0
+    material: mat2
+    mesh: mesh2
+  shapeBody2.addShape sphereShape
+  shapeBody2.position.set 0, height, size
+  shapeBody2.linearDamping = damping
+  @world.addBody shapeBody2
+  @objects.add shapeBody2
+  @scene.add mesh2
   #
   # mat3 = new CANNON.Material
   # mesh3 = new THREE.Mesh sphereGeometry, sphereMaterial
@@ -173,3 +173,12 @@ class @Game
   @world.addContactMaterial mat1_ground
   # @world.addContactMaterial mat2_ground
   # @world.addContactMaterial mat3_ground
+
+  document.getElementById(@settings.containerID).addEventListener 'mousemove', (event) ->
+    # mouseX = (event.clientX - window.)
+    # shapeBody1.position.set
+    X = (event.pageX - this.offsetLeft) - this.offsetWidth / 2
+    Y = event.pageY - this.offsetTop - this.offsetHeight / 2
+    console.log 'mousemove [' + X + ', ' + Y + ']'
+    shapeBody2.position.x = X
+    shapeBody2.position.y = -Y
