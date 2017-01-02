@@ -163,15 +163,15 @@ class @Game
   mat1_ground = new CANNON.ContactMaterial groundMaterial, mat1,
     friction: 0.0
     restitution: 0.0
-  # mat2_ground = new CANNON.ContactMaterial groundMaterial, mat2,
-  #   friction: 0.0
-  #   restitution: 0.7
+  mat2_ground = new CANNON.ContactMaterial groundMaterial, mat2,
+    friction: 0.0
+    restitution: 0.7
   # mat3_ground = new CANNON.ContactMaterial groundMaterial, mat3,
   #   friction: 0.0
   #   restitution: 0.9
 
   @world.addContactMaterial mat1_ground
-  # @world.addContactMaterial mat2_ground
+  @world.addContactMaterial mat2_ground
   # @world.addContactMaterial mat3_ground
 
   document.getElementById(@settings.containerID).addEventListener 'mousemove', (event) ->
