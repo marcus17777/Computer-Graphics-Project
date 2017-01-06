@@ -118,7 +118,6 @@
   @world.addBody groundBody
   @objects.add groundBody
 
-<<<<<<< HEAD
 
   console.log @
 
@@ -127,34 +126,6 @@
   @world.add ball
   @scene.add ball.mesh
 
-  # # Shape on plane
-  # mat1 = new CANNON.Material
-  # mesh1 = new THREE.Mesh sphereGeometry, sphereMaterial
-  # shapeBody1 = new CANNON.MeshBody
-  #   mass: mass
-  #   material: mat1
-  #   mesh: mesh1
-  # shapeBody1.addShape sphereShape
-  # shapeBody1.position.set 3*size, height, size
-  # shapeBody1.linearDamping = damping
-  # @world.addBody shapeBody1
-  # @objects.add shapeBody1
-  # @scene.add mesh1
-  #
-  # mat2 = new CANNON.Material
-  # mesh2 = new THREE.Mesh sphereGeometry, sphereMaterial
-  # shapeBody2 = new CANNON.MeshBody
-  #   mass: 0
-  #   material: mat2
-  #   mesh: mesh2
-  # shapeBody2.addShape sphereShape
-  # shapeBody2.position.set 0, height, size
-  # shapeBody2.linearDamping = damping
-  # @world.addBody shapeBody2
-  # @objects.add shapeBody2
-  # @scene.add mesh2
-  #
-=======
   # bunnyBody = new CANNON.Body({ mass: 1 })
   # console.log window
   # for i in [0..window.bunny.length - 1] by 1
@@ -336,33 +307,32 @@
 
 
   # Shape on plane
-  mat1 = new CANNON.Material
-  mesh1 = new THREE.Mesh sphereGeometry, sphereMaterial
-  shapeBody1 = new CANNON.MeshBody
-    mass: mass
-    material: mat1
-    mesh: mesh1
-  shapeBody1.addShape sphereShape
-  shapeBody1.position.set 3*size, height, size
-  shapeBody1.linearDamping = damping
-  @world.addBody shapeBody1
-  @objects.add shapeBody1
-  @scene.add mesh1
+  # mat1 = new CANNON.Material
+  # mesh1 = new THREE.Mesh sphereGeometry, sphereMaterial
+  # shapeBody1 = new CANNON.MeshBody
+  #   mass: mass
+  #   material: mat1
+  #   mesh: mesh1
+  # shapeBody1.addShape sphereShape
+  # shapeBody1.position.set 3*size, height, size
+  # shapeBody1.linearDamping = damping
+  # @world.addBody shapeBody1
+  # @objects.add shapeBody1
+  # @scene.add mesh1
+  #
+  # mat2 = new CANNON.Material
+  # mesh2 = new THREE.Mesh sphereGeometry, sphereMaterial
+  # shapeBody2 = new CANNON.MeshBody
+  #   mass: 1
+  #   material: mat2
+  #   mesh: mesh2
+  # shapeBody2.addShape sphereShape
+  # shapeBody2.position.set 0, height, size
+  # shapeBody2.linearDamping = damping
+  # @world.addBody shapeBody2
+  # @objects.add shapeBody2
+  # @scene.add mesh2
 
-  mat2 = new CANNON.Material
-  mesh2 = new THREE.Mesh sphereGeometry, sphereMaterial
-  shapeBody2 = new CANNON.MeshBody
-    mass: 1
-    material: mat2
-    mesh: mesh2
-  shapeBody2.addShape sphereShape
-  shapeBody2.position.set 0, height, size
-  shapeBody2.linearDamping = damping
-  @world.addBody shapeBody2
-  @objects.add shapeBody2
-  @scene.add mesh2
-
->>>>>>> 2965a717c84d552746c346ac3d527a1a389a8174
   # mat3 = new CANNON.Material
   # mesh3 = new THREE.Mesh sphereGeometry, sphereMaterial
   # shapeBody3 = new CANNON.MeshBody
@@ -377,21 +347,12 @@
   # @scene.add mesh3
 
   # Create contact material behaviour
-<<<<<<< HEAD
   # mat1_ground = new CANNON.ContactMaterial groundMaterial, mat1,
   #   friction: 0.0
   #   restitution: 0.0
   # mat2_ground = new CANNON.ContactMaterial groundMaterial, mat2,
   #   friction: 0.0
   #   restitution: 0.7
-=======
-  mat1_ground = new CANNON.ContactMaterial groundMaterial, mat1,
-    friction: 0.0
-    restitution: 0.99
-  mat2_ground = new CANNON.ContactMaterial groundMaterial, mat2,
-    friction: 0.0
-    restitution: 0.7
->>>>>>> 2965a717c84d552746c346ac3d527a1a389a8174
   # mat3_ground = new CANNON.ContactMaterial groundMaterial, mat3,
   #   friction: 0.0
   #   restitution: 0.9
@@ -400,7 +361,6 @@
   # @world.addContactMaterial mat2_ground
   # @world.addContactMaterial mat3_ground
 
-<<<<<<< HEAD
   # self = @
   # document.getElementById(@settings.containerID).addEventListener 'mousemove', (event) ->
   #   # mouseX = (event.clientX - window.)
@@ -428,18 +388,3 @@
   #   # shapeBody2.position.y = -Y
   #   # shapeBody2.position.z = Z
   #   shapeBody2.position.set pos.x, pos.y, pos.z
-=======
-
-
-
-
-
-  # document.getElementById(@settings.containerID).addEventListener 'mousemove', (event) ->
-  #   # mouseX = (event.clientX - window.)
-  #   # shapeBody1.position.set
-  #   X = (event.pageX - this.offsetLeft) - this.offsetWidth / 2
-  #   Y = event.pageY - this.offsetTop - this.offsetHeight / 2
-  #   console.log 'mousemove [' + X + ', ' + Y + ']'
-  #   mesh.position.x = X
-  #   mesh.position.y = -Y
->>>>>>> 2965a717c84d552746c346ac3d527a1a389a8174

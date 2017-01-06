@@ -3,7 +3,7 @@
  * Specifically http://hacd.svn.sourceforge.net/viewvc/hacd/data/bowl_hacd.wrl?revision=178&view=markup
  * Rescaling and offset edits by @schteppe
  */
-window.bunny = [
+var bunny = [
 {"verts":[-0.05742858426966302,0.3614640449438202,-0.5847649396853932,
 -0.3901165842696629,0.31258404494382036,0.2767210603146067,
 0.4567554157303372,-0.2362159550561797,0.3372288603146067,

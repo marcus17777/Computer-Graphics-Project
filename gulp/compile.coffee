@@ -16,6 +16,6 @@ module.exports = ($) ->
   @gulp.task 'clean', =>
     to_remove = [
       'app/**/*.js',
-      '!app/lib/*'
+      '!app/lib/**'
     ]
     @del.sync to_remove
