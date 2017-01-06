@@ -1,7 +1,4 @@
-class @Game
-  constructor: () ->
-    objects = undefined
-    cannonDebugRenderer = undefined
+@Game ||= {}
 
 
 @Game.init = () ->
@@ -88,7 +85,7 @@ class @Game
 
 
   mass = 10
-  size = 10
+  size = 1
   height = 100
   damping = 0.01
   sphereShape = new CANNON.Sphere size
@@ -119,32 +116,40 @@ class @Game
   @world.addBody groundBody
   @objects.add groundBody
 
-  # Shape on plane
-  mat1 = new CANNON.Material
-  mesh1 = new THREE.Mesh sphereGeometry, sphereMaterial
-  shapeBody1 = new CANNON.MeshBody
-    mass: mass
-    material: mat1
-    mesh: mesh1
-  shapeBody1.addShape sphereShape
-  shapeBody1.position.set 3*size, height, size
-  shapeBody1.linearDamping = damping
-  @world.addBody shapeBody1
-  @objects.add shapeBody1
-  @scene.add mesh1
 
-  mat2 = new CANNON.Material
-  mesh2 = new THREE.Mesh sphereGeometry, sphereMaterial
-  shapeBody2 = new CANNON.MeshBody
-    mass: 0
-    material: mat2
-    mesh: mesh2
-  shapeBody2.addShape sphereShape
-  shapeBody2.position.set 0, height, size
-  shapeBody2.linearDamping = damping
-  @world.addBody shapeBody2
-  @objects.add shapeBody2
-  @scene.add mesh2
+  console.log @
+
+  ball = new @Ball size: 10, mass: 10, position: [0, 100, 0]
+  @objects.add ball
+  @world.add ball
+  @scene.add ball.mesh
+
+  # # Shape on plane
+  # mat1 = new CANNON.Material
+  # mesh1 = new THREE.Mesh sphereGeometry, sphereMaterial
+  # shapeBody1 = new CANNON.MeshBody
+  #   mass: mass
+  #   material: mat1
+  #   mesh: mesh1
+  # shapeBody1.addShape sphereShape
+  # shapeBody1.position.set 3*size, height, size
+  # shapeBody1.linearDamping = damping
+  # @world.addBody shapeBody1
+  # @objects.add shapeBody1
+  # @scene.add mesh1
+  #
+  # mat2 = new CANNON.Material
+  # mesh2 = new THREE.Mesh sphereGeometry, sphereMaterial
+  # shapeBody2 = new CANNON.MeshBody
+  #   mass: 0
+  #   material: mat2
+  #   mesh: mesh2
+  # shapeBody2.addShape sphereShape
+  # shapeBody2.position.set 0, height, size
+  # shapeBody2.linearDamping = damping
+  # @world.addBody shapeBody2
+  # @objects.add shapeBody2
+  # @scene.add mesh2
   #
   # mat3 = new CANNON.Material
   # mesh3 = new THREE.Mesh sphereGeometry, sphereMaterial
@@ -160,25 +165,44 @@ class @Game
   # @scene.add mesh3
 
   # Create contact material behaviour
-  mat1_ground = new CANNON.ContactMaterial groundMaterial, mat1,
-    friction: 0.0
-    restitution: 0.0
-  mat2_ground = new CANNON.ContactMaterial groundMaterial, mat2,
-    friction: 0.0
-    restitution: 0.7
+  # mat1_ground = new CANNON.ContactMaterial groundMaterial, mat1,
+  #   friction: 0.0
+  #   restitution: 0.0
+  # mat2_ground = new CANNON.ContactMaterial groundMaterial, mat2,
+  #   friction: 0.0
+  #   restitution: 0.7
   # mat3_ground = new CANNON.ContactMaterial groundMaterial, mat3,
   #   friction: 0.0
   #   restitution: 0.9
 
-  @world.addContactMaterial mat1_ground
-  @world.addContactMaterial mat2_ground
+  # @world.addContactMaterial mat1_ground
+  # @world.addContactMaterial mat2_ground
   # @world.addContactMaterial mat3_ground
 
-  document.getElementById(@settings.containerID).addEventListener 'mousemove', (event) ->
-    # mouseX = (event.clientX - window.)
-    # shapeBody1.position.set
-    X = (event.pageX - this.offsetLeft) - this.offsetWidth / 2
-    Y = event.pageY - this.offsetTop - this.offsetHeight / 2
-    console.log 'mousemove [' + X + ', ' + Y + ']'
-    shapeBody2.position.x = X
-    shapeBody2.position.y = -Y
+  # self = @
+  # document.getElementById(@settings.containerID).addEventListener 'mousemove', (event) ->
+  #   # mouseX = (event.clientX - window.)
+  #   # shapeBody1.position.set
+  #
+  #   X = (event.pageX - this.offsetLeft) - this.offsetWidth / 2
+  #   Y = (event.pageY - this.offsetTop) - this.offsetHeight / 2
+  #   # Z = 0.5
+  #   X = (X / this.offsetWidth) * 2 #- 1
+  #   Y = -(Y / this.offsetHeight) * 2 #+ 1
+  #   Z = -0
+  #   pos = new THREE.Vector3 X, Y, Z
+  #   console.log pos
+  #
+  #   pos.unproject(self.camera)
+  #   dir = pos.clone().sub(self.camera.position).normalize()
+  #   pos.add dir.clone().multiplyScalar(10)
+  #
+  #   console.log 'mousemove [#{X}, #{Y}, #{Z}]'
+  #   console.log pos
+  #   # console.log @camera
+  #   # console.log pos
+  #   # pos.project @camera
+  #   # shapeBody2.position.x = X
+  #   # shapeBody2.position.y = -Y
+  #   # shapeBody2.position.z = Z
+  #   shapeBody2.position.set pos.x, pos.y, pos.z

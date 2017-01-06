@@ -52,6 +52,8 @@
   @camera.lookAt @scene.position
   @scene.add @camera
 
+  @projector = new THREE.Projector
+
   # Renderer initialization
   @renderer = new THREE.WebGLRenderer antialias: true
   @renderer.setSize @settings.SCREEN_WIDTH, @settings.SCREEN_HEIGHT
