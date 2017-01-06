@@ -17,3 +17,17 @@ millis = () ->
 
 toRad = (degrees) ->
   Math.PI * 2 * degree / 360
+
+
+
+class @HttpClient
+  constructor: () ->
+
+  get: (url, callback) ->
+    httpRequest = new XMLHttpRequest
+    httpRequest.onreadystatechange = () ->
+      if httpRequest.readyState == 4 && httpRequest.status == 200
+        callback httpRequest.responseText
+
+    httpRequest.open 'GET', url, true
+    httpRequest.send null
