@@ -1,4 +1,7 @@
-@Game ||= {}
+class @Game
+  constructor: () ->
+    objects = undefined
+    cannonDebugRenderer = undefined
 
 
 @Game.init = () ->
@@ -6,6 +9,7 @@
   @initThree()
   @initCannon()
   @initGUI()
+
 
   console.log @scene
   console.log @world
@@ -16,6 +20,9 @@
 
   @objects = new CANNON.Group
   @initGeometry()
+
+
+
 
   @update()
 
@@ -49,7 +56,7 @@
 
 
   mass = 10
-  size = 1
+  size = 10
   height = 100
   damping = 0.01
 
@@ -82,8 +89,6 @@
   this.addMeshBody groundBody
 
 
-  console.log @
-
   ball = new @Ball
     size: 10
     mass: 1
@@ -105,20 +110,24 @@
       obj.position.set 50, 100, 0
       @addMeshBody obj
 
+      helper = new THREE.BoundingBoxHelper(racket.mesh, 0xff0000)
+      helper.update()
+      @scene.add helper
 
 
-  self = @
-  document.getElementById(@settings.containerID).addEventListener 'mousemove', (event) ->
 
-    X = (event.pageX - this.offsetLeft) - this.offsetWidth / 2
-    Y = (event.pageY - this.offsetTop) - this.offsetHeight / 2
-    X = (X / this.offsetWidth) * 2 #- 1
-    Y = -(Y / this.offsetHeight) * 2 #+ 1
-    Z = -0
-    pos = new THREE.Vector3 X, Y, Z
-
-    pos.unproject(self.camera)
-    dir = pos.clone().sub(self.camera.position).normalize()
-    pos.add dir.clone().multiplyScalar(10)
-
-    racket.position.set pos.x, pos.y, pos.z
+  # self = @
+  # document.getElementById(@settings.containerID).addEventListener 'mousemove', (event) ->
+  #
+  #   X = (event.pageX - this.offsetLeft) - this.offsetWidth / 2
+  #   Y = (event.pageY - this.offsetTop) - this.offsetHeight / 2
+  #   X = (X / this.offsetWidth) * 2 #- 1
+  #   Y = -(Y / this.offsetHeight) * 2 #+ 1
+  #   Z = -0
+  #   pos = new THREE.Vector3 X, Y, Z
+  #
+  #   pos.unproject(self.camera)
+  #   dir = pos.clone().sub(self.camera.position).normalize()
+  #   pos.add dir.clone().multiplyScalar(10)
+  #
+  #   racket.position.set pos.x, pos.y, pos.z
