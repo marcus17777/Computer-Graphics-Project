@@ -1,34 +1,41 @@
-scene = undefined
-camera = undefined
-renderer = undefined
-
-screen_width = 800
-screen_height = 600
-
-viewerPosition = new THREE.Vector3(0.0, 0.0, 8.0)
 
 
-millis = () ->
-  new Date.getTime()
 
-toRad = (degrees) ->
-  Math.PI * 2 * degree / 360
+Game.logic = () ->
 
-@onLoad = () ->
-  appContainer = document.getElementById("appContainer")
 
-  scene = new THREE.Scene
-  renderer = new THREE.WebGLRenderer
-  renderer.setSize(screen_width, screen_height)
-  appContainer.appendChild(renderer.domElement)
-  camera = new THREE.PerspectiveCamera(80, screen_width / screen_height, 1, 1000)
-  camera.position.set(viewerPosition.x, viewerPosition.y, viewerPosition.z)
-  camera.up = new THREE.Vector3(0, 1, 0)
-  camera.lookAt(new THREE.Vector3(0, -5, 0))
-  scene.add camera
+class Round
+  constructor: () ->
+    
 
-  render;
+@Game.score = () ->
+	
+	scoreTable = [0,0]
+	player1Score = scoreTable[0]
+	player2Score = scoreTable[1]
+	
+	scoreboard = document.getElementById("scoreContainer")
+	
+	scoreDiv1 = document.getElementById("player1")
+	scoreDiv2 = document.getElementById("player2")
+	
+	player1 = document.createTextNode(player1Score)
+	player2 = document.createTextNode(player2Score)
+	
+	scoreDiv1.innerText = player1.textContent
+	scoreDiv2.innerText = player2.textContent
+	
+	scoreboard.addEventListener 'click', (event) ->
+		player1Score += 1
+		
+		scoreDiv1.innerText = player1Score
+		scoreDiv2.innerText = player2Score
+		
+		scoreTable[0] = player1Score
+		scoreTable[1] = player2Score
+		
+		
+	console.log scoreTable
+	
 
-render = () ->
-  requestAnimationFrame render
-  renderer.render scene, camera
+

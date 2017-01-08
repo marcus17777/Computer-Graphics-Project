@@ -4,3 +4,4 @@ app/**/*.js
 !app/lib/**/*.js
 dist
 .idea
+fabfile.py
