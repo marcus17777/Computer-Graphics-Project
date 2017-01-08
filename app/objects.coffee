@@ -1,34 +1,56 @@
-class Ball extends CANNON.MeshBody
-  @sphereMaterial = new THREE.MeshLambertMaterial color: 0x8888ff
-  @sphereGeometry = new THREE.SphereGeometry 1, 32, 16
-  @sphereShape = new CANNON.Sphere 1
-
+class Base extends CANNON.MeshBody
   constructor: (args) ->
-    super(
-      args,
-      material: new CANNON.Material
-    )
-    @mesh = new THREE.Mesh Ball.sphereGeometry, Ball.sphereMaterial
-    [X, Y, Z] = args.position or [0, 0, 0]
-    @position.set X, Y, Z
+    args.mesh = @mesh
+    args.material = new CANNON.Material
+    super(args)
+    @addShape @shape
 
-    @addShape Ball.sphereShape
-    # @linearDamping =
+    if args.callback?
+      args.callback(@)
 
-  update: () ->
-    @checkbounds()
-    super()
 
-  checkbounds: () ->
-    # should check if ball is in bounds of game board.
+class Ball extends Base
+  constructor: (args) ->
+    @initModel()
+    super(args)
+
+
+  initModel: () ->
+    radius = 10
+
+    material = new THREE.MeshLambertMaterial color: 0x8888ff
+    geometry = new THREE.SphereGeometry radius, 32, 16
+
+    @shape = new CANNON.Sphere radius
+    @mesh = new THREE.Mesh geometry, material
 
 @Game.Ball = Ball
 
 
-class Racket extends CANNON.MeshBody
-  constructor: () ->
 
-  update: () ->
-    super.update()
+class Racket extends Base
+  @mtl_url : 'models/reketfull24.mtl'
+  @obj_url : 'models/reketfull24.obj'
 
-  serve: () ->
+  constructor: (args) ->
+    @initModel(() =>
+      super(args)
+    )
+
+
+  initModel: (callback) ->
+    mtlLoader = new THREE.MTLLoader
+    mtlLoader.load Racket.mtl_url, (materials) =>
+      objLoader = new THREE.OBJLoader
+      objLoader.setMaterials materials
+      objLoader.load Racket.obj_url, (object) =>
+        # object.traverse (child) ->
+        #   if child.geometry?
+        #     @geometry = child.geometry
+        #     @material = child.material
+        @mesh = object
+        callback()
+
+    @shape = new CANNON.Sphere 10
+
+ @Game.Racket = Racket
