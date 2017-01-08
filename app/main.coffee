@@ -113,7 +113,7 @@ class @Game
       helper = new THREE.BoundingBoxHelper(racket.mesh, 0xff0000)
       helper.update()
       @scene.add helper
-
+      @objects.add helper
 
   # self = @
   # document.getElementById(@settings.containerID).addEventListener 'mousemove', (event) ->
