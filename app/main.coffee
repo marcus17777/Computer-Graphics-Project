@@ -115,7 +115,6 @@ class @Game
       @scene.add helper
 
 
-
   # self = @
   # document.getElementById(@settings.containerID).addEventListener 'mousemove', (event) ->
   #
