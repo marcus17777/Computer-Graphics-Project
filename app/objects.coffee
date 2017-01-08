@@ -3,7 +3,7 @@ class Base extends CANNON.MeshBody
     args.mesh = @mesh
     args.material = new CANNON.Material
     super(args)
-    @addShape @shape
+    @addShape @shape, @shape.offset
 
     if args.callback?
       args.callback(@)
@@ -73,7 +73,8 @@ class Racket extends Base
 
 
 
-      @shape = new CANNON.Box(new CANNON.Vec3(142, 5, 101))
+      @shape = new CANNON.Box(new CANNON.Vec3 331 / 2, 9 / 2, 202/ 2)
+      @shape.offset = new CANNON.Vec3 -25, 17, 0
       @mesh = mesh
       callback()
 

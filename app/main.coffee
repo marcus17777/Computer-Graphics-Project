@@ -32,6 +32,9 @@ class @Game
   @updateGUI()
   @objects.update()
   @updatePhysics()
+  # console.log @helper
+  # console.log @helper.box.getSize()
+  # console.log @racket.position
   if @settings.DEBUG
     @cannonDebugRenderer.update()
   @render()
@@ -109,11 +112,13 @@ class @Game
     callback: (obj) =>
       obj.position.set 50, 100, 0
       @addMeshBody obj
+      #
+      # @helper = new THREE.BoundingBoxHelper(racket.mesh, 0xff0000)
+      # @helper.update()
+      # @scene.add @helper
+      # @objects.add @helper
 
-      helper = new THREE.BoundingBoxHelper(racket.mesh, 0xff0000)
-      helper.update()
-      @scene.add helper
-      @objects.add helper
+  @racket = racket
 
   # self = @
   # document.getElementById(@settings.containerID).addEventListener 'mousemove', (event) ->
