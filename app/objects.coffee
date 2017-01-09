@@ -17,6 +17,7 @@ class Ball extends Base
     super(args)
 
     @angularDamping = 0.1
+    
 
 
   setStatic: (bool) ->
@@ -133,7 +134,7 @@ class Racket extends Base
 
 
  class Table extends Base
-   @dimensions: [160, 10, 320]
+   @dimensions: [1024, 10, 1024]
 
    constructor: (args) ->
      args.mass = 0

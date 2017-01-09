@@ -128,7 +128,7 @@ class @Game
     serving_force: 4000
     callback: (obj) =>
       obj.setTrack ball
-      obj.position.set 50, 200, 0
+      obj.position.set 1, 200, 100
       @addMeshBody obj
       obj.quaternion.setFromVectors new CANNON.Vec3(-1, 1, 0), new CANNON.Vec3(0, -1, -1)
 
@@ -137,6 +137,24 @@ class @Game
   table = new @Table
     callback: (obj) =>
       @addMeshBody obj
+
+
+  kek = new CANNON.ContactMaterial table, ball.material,
+      friction: 0.0
+      restitution: 1.0
+  lel = new CANNON.ContactMaterial racket, ball.material,
+      friction: 0.0
+      restitution: 1.0
+  lol = new CANNON.ContactMaterial racketbot, ball.material,
+      friction: 0.0
+      restitution: 1.0
+
+  @world.addContactMaterial kek
+  @world.addContactMaterial lel
+  @world.addContactMaterial lol
+
+
+
 
 
 
