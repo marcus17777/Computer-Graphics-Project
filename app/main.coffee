@@ -93,22 +93,20 @@ class @Game
 
 
   ball = new @Ball
-    size: 10
+    radius: 10
     mass: 1
     callback: (obj) =>
       obj.position.set 0, 100, 0
       @addMeshBody obj
 
   ball2 = new @Ball
-    size: 10
+    radius: 10
     mass: 1
     callback: (obj) =>
       obj.position.set 10, 50, 0
       @addMeshBody obj
 
   racket = new @Racket
-    size: 10
-    mass: 0
     serving_force: 4000
     callback: (obj) =>
       obj.position.set 50, 100, 0
@@ -116,13 +114,22 @@ class @Game
       obj.quaternion.setFromVectors new CANNON.Vec3(-1, 1, 0), new CANNON.Vec3(0, -1, -1)
       obj.catch(ball)
 
-      #
+
       # @helper = new THREE.BoundingBoxHelper(racket.mesh, 0xff0000)
       # @helper.update()
       # @scene.add @helper
+      # console.log @helper
       # @objects.add @helper
 
   @racket = racket
+
+  table = new @Table
+    callback: (obj) =>
+      @addMeshBody obj
+
+
+
+
 
   self = @
   document.getElementById(@settings.containerID).addEventListener 'mousemove', (event) ->

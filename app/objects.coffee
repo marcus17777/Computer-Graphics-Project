@@ -11,19 +11,26 @@ class Base extends CANNON.MeshBody
 
 class Ball extends Base
   constructor: (args) ->
+    @radius = args.radius
+
     @initModel()
     super(args)
 
+    @angularDamping = 0.1
+
 
   setStatic: (bool) ->
+    console.log bool
     if bool
+      console.log 'setStatic'
       @last_mass = @mass
       @mass = 0
+      @velocity.set 0, 0, 0
+      @angularVelocity.set 0, 0, 0
       @updateMassProperties()
 
-      @velocity.setZero()
-      @angularVelocity.setZero()
     else
+      console.log 'remove static'
       @mass = @last_mass
       @last_mass = undefined
       @updateMassProperties()
@@ -31,12 +38,10 @@ class Ball extends Base
 
 
   initModel: () ->
-    radius = 10
-
     material = new THREE.MeshLambertMaterial color: 0x8888ff
-    geometry = new THREE.SphereGeometry radius, 32, 16
+    geometry = new THREE.SphereGeometry @radius, 32, 16
 
-    @shape = new CANNON.Sphere radius
+    @shape = new CANNON.Sphere @radius
     @mesh = new THREE.Mesh geometry, material
 
 @Game.Ball = Ball
@@ -45,8 +50,11 @@ class Ball extends Base
 
 class Racket extends Base
   @url = "models/reketfull.json"
+  @scale = 100.0
 
   constructor: (args) ->
+    args.mass = 0
+
     @initModel(() =>
       super(args)
     )
@@ -56,9 +64,9 @@ class Racket extends Base
     @serving_force = args.serving_force || 0
 
   catch: (ball) ->
-    console.log "catch"
-    console.log ball
-    console.log @catched_objects
+    # console.log "catch"
+    # console.log ball
+    # console.log @catched_objects
     index = @catched_objects.indexOf ball
 
     if index == -1
@@ -67,9 +75,9 @@ class Racket extends Base
 
 
   serve: (ball) ->
-    console.log "serve"
-    console.log @serving_force
-    console.log ball
+    # console.log "serve"
+    # console.log @serving_force
+    # console.log ball
 
     index = @catched_objects.indexOf ball
 
@@ -77,8 +85,7 @@ class Racket extends Base
       @catched_objects.splice index, 1
       ball.setStatic false
 
-      console.log window.Game.settings
-      point = new CANNON.Vec3 0, 0, 1
+      point = new CANNON.Vec3 0, 0, 0
       impulse = new CANNON.Vec3 0, 0, @serving_force * window.Game.settings.TIMESTEP
       ball.applyImpulse impulse, point
 
@@ -88,26 +95,9 @@ class Racket extends Base
   update: () ->
     for obj in @catched_objects
       obj.position.copy this.position
-      # obj.quaternion.copy this.quaternion
-      # obj.velocity.set 0, 0, 0
-      # obj.inertia.set 0, 0, 0
     super()
 
   initModel: (callback) ->
-    # mtlLoader = new THREE.MTLLoader
-    # mtlLoader.load Racket.mtl_url, (materials) =>
-    #   objLoader = new THREE.OBJLoader
-    #   objLoader.setMaterials materials
-    #   objLoader.load Racket.obj_url, (object) =>
-    #     # object.traverse (child) ->
-    #     #   if child.geometry?
-    #     #     @geometry = child.geometry
-    #     #     @material = child.material
-    #     @mesh = object
-    #     callback()
-    #
-    # @shape = new CANNON.Sphere 10
-
     loader = new THREE.JSONLoader
     loader.load Racket.url, (geometry) =>
       material = new THREE.MeshLambertMaterial
@@ -116,29 +106,45 @@ class Racket extends Base
         opacity: 0.5
 
       mesh = new THREE.Mesh geometry, material
-      # boxShape = new CANNON.Box(new CANNON.Vec3(3.4,0.1,2.1))
-      # boxBody = new CANNON.Body({ mass: mass })
-      # boxBody.position.set(0,50,0)
-      # @scene.add boxBody
-      # boxBody.addShape boxShape
-      #
-
-      mesh.scale.set 100, 100, 100
-
-
-      # box = new THREE.Box3().setFromObject( mesh )
-      # console.log( box.min, box.max, box.getSize() )
       mesh.geometry.computeBoundingBox()
-      console.log mesh
+      boundingBoxSize = mesh.geometry.boundingBox.getSize()
 
+      scale_coe = Racket.scale
+      mesh.scale.set scale_coe, scale_coe, scale_coe
 
+      offset = new THREE.Vector3
+      offset.subVectors mesh.geometry.boundingBox.max, mesh.geometry.boundingBox.min
+      offset.multiplyScalar 0.5
+      offset.add mesh.geometry.boundingBox.min
+      offset.applyMatrix4 mesh.matrixWorld
+      offset.multiplyScalar scale_coe
 
-      @shape = new CANNON.Box(new CANNON.Vec3 331 / 2, 9 / 2, 202/ 2)
-      @shape.offset = new CANNON.Vec3 -25, 17, 0
+      ShapeBoxSize = (new CANNON.Vec3 boundingBoxSize.x, boundingBoxSize.y, boundingBoxSize.z).scale scale_coe / 2
+
+      @shape = new CANNON.Box ShapeBoxSize
+      @shape.offset = new CANNON.Vec3 offset.x, offset.y, offset.z
       @mesh = mesh
       callback()
 
-
-
-
  @Game.Racket = Racket
+
+
+ class Table extends Base
+   @dimensions: [160, 10, 320]
+
+   constructor: (args) ->
+     args.mass = 0
+     @initModel()
+     super(args)
+
+   initModel: () ->
+     # Setting size
+     [width, height, length] = Table.dimensions
+
+     material = new THREE.MeshLambertMaterial color: 0x00ff00
+     geometry = new THREE.BoxGeometry width, height, length
+
+     @shape = new CANNON.Box(new CANNON.Vec3 width/2, height/2, length/2)
+     @mesh = new THREE.Mesh geometry, material
+
+@Game.Table = Table
