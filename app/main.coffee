@@ -123,6 +123,17 @@ class @Game
 
   @racket = racket
 
+
+  racketbot = new @RacketBot
+    serving_force: 4000
+    callback: (obj) =>
+      obj.setTrack ball
+      obj.position.set 50, 200, 0
+      @addMeshBody obj
+      obj.quaternion.setFromVectors new CANNON.Vec3(-1, 1, 0), new CANNON.Vec3(0, -1, -1)
+
+
+
   table = new @Table
     callback: (obj) =>
       @addMeshBody obj

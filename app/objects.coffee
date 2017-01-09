@@ -103,7 +103,7 @@ class Racket extends Base
       material = new THREE.MeshLambertMaterial
         color: @color
         transparent: true
-        opacity: 0.5
+        opacity: 1
 
       mesh = new THREE.Mesh geometry, material
       mesh.geometry.computeBoundingBox()
@@ -129,6 +129,9 @@ class Racket extends Base
  @Game.Racket = Racket
 
 
+
+
+
  class Table extends Base
    @dimensions: [160, 10, 320]
 
@@ -148,3 +151,25 @@ class Racket extends Base
      @mesh = new THREE.Mesh geometry, material
 
 @Game.Table = Table
+
+class RacketBot extends Racket
+  constructor: (args) ->
+    super(args)
+
+    @color = args.color || 0xff0000
+    @tracking = undefined
+
+  update: () ->
+    if @tracking?
+      position=new CANNON.Vec3().copy @tracking.position
+      position.z = this.position.z
+      this.position.copy position
+    super()
+
+  setTrack: (obj) ->
+    @tracking = obj
+
+  removeTrack: () ->
+    @tracking = undefined
+
+@Game.RacketBot= RacketBot
