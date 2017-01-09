@@ -35,7 +35,54 @@ class Racket extends Base
     @initModel(() =>
       super(args)
     )
+    @catched_objects = []
 
+    @color = args.color || 0x1111ff
+    @serving_force = args.serving_force || 0
+
+  catch: (ball) ->
+    console.log "catch"
+    console.log ball
+    console.log @catched_objects
+    index = @catched_objects.indexOf ball
+
+    if index == -1
+      @catched_objects.push ball
+      ball.last_mass = ball.mass
+      ball.mass = 0
+      ball.updateMassProperties()
+
+      ball.velocity.setZero()
+      ball.angularVelocity.setZero()
+
+  serve: (ball) ->
+    console.log "serve"
+    console.log @serving_force
+    console.log ball
+
+    index = @catched_objects.indexOf ball
+
+    if index != -1
+      @catched_objects.splice index, 1
+      ball.mass = ball.last_mass
+      ball.last_mass = undefined
+      ball.updateMassProperties()
+
+      console.log window.Game.settings
+      point = new CANNON.Vec3 0, 0, 1
+      impulse = new CANNON.Vec3 0, 0, @serving_force * window.Game.settings.TIMESTEP
+      ball.applyImpulse impulse, point
+
+
+
+
+  update: () ->
+    for obj in @catched_objects
+      obj.position.copy this.position
+      # obj.quaternion.copy this.quaternion
+      # obj.velocity.set 0, 0, 0
+      # obj.inertia.set 0, 0, 0
+    super()
 
   initModel: (callback) ->
     # mtlLoader = new THREE.MTLLoader
@@ -54,7 +101,11 @@ class Racket extends Base
 
     loader = new THREE.JSONLoader
     loader.load Racket.url, (geometry) =>
-      material = new THREE.MeshLambertMaterial color: 0x1111ff
+      material = new THREE.MeshLambertMaterial
+        color: @color
+        transparent: true
+        opacity: 0.5
+
       mesh = new THREE.Mesh geometry, material
       # boxShape = new CANNON.Box(new CANNON.Vec3(3.4,0.1,2.1))
       # boxBody = new CANNON.Body({ mass: mass })

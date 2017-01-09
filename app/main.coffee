@@ -109,9 +109,13 @@ class @Game
   racket = new @Racket
     size: 10
     mass: 0
+    serving_force: 4000
     callback: (obj) =>
       obj.position.set 50, 100, 0
       @addMeshBody obj
+      obj.quaternion.setFromVectors new CANNON.Vec3(-1, 1, 0), new CANNON.Vec3(0, -1, -1)
+      obj.catch(ball)
+
       #
       # @helper = new THREE.BoundingBoxHelper(racket.mesh, 0xff0000)
       # @helper.update()
@@ -120,18 +124,24 @@ class @Game
 
   @racket = racket
 
-  # self = @
-  # document.getElementById(@settings.containerID).addEventListener 'mousemove', (event) ->
-  #
-  #   X = (event.pageX - this.offsetLeft) - this.offsetWidth / 2
-  #   Y = (event.pageY - this.offsetTop) - this.offsetHeight / 2
-  #   X = (X / this.offsetWidth) * 2 #- 1
-  #   Y = -(Y / this.offsetHeight) * 2 #+ 1
-  #   Z = -0
-  #   pos = new THREE.Vector3 X, Y, Z
-  #
-  #   pos.unproject(self.camera)
-  #   dir = pos.clone().sub(self.camera.position).normalize()
-  #   pos.add dir.clone().multiplyScalar(10)
-  #
-  #   racket.position.set pos.x, pos.y, pos.z
+  self = @
+  document.getElementById(@settings.containerID).addEventListener 'mousemove', (event) ->
+
+    X = (event.pageX - this.offsetLeft) - this.offsetWidth / 2
+    Y = (event.pageY - this.offsetTop) - this.offsetHeight / 2
+    X = (X / this.offsetWidth) * 2 #- 1
+    Y = -(Y / this.offsetHeight) * 2 #+ 1
+    Z = -0
+    pos = new THREE.Vector3 X, Y, Z
+
+    pos.unproject(self.camera)
+    dir = pos.clone().sub(self.camera.position).normalize()
+    pos.add dir.clone().multiplyScalar(1000)
+
+    racket.position.set pos.x, pos.y, pos.z
+
+  document.getElementById(@settings.containerID).addEventListener 'mouseup', (event) ->
+    if event.which == 1
+      racket.serve(ball)
+    else if event.which == 3
+      racket.catch(ball)
