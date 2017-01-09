@@ -15,6 +15,21 @@ class Ball extends Base
     super(args)
 
 
+  setStatic: (bool) ->
+    if bool
+      @last_mass = @mass
+      @mass = 0
+      @updateMassProperties()
+
+      @velocity.setZero()
+      @angularVelocity.setZero()
+    else
+      @mass = @last_mass
+      @last_mass = undefined
+      @updateMassProperties()
+
+
+
   initModel: () ->
     radius = 10
 
@@ -48,12 +63,8 @@ class Racket extends Base
 
     if index == -1
       @catched_objects.push ball
-      ball.last_mass = ball.mass
-      ball.mass = 0
-      ball.updateMassProperties()
+      ball.setStatic true
 
-      ball.velocity.setZero()
-      ball.angularVelocity.setZero()
 
   serve: (ball) ->
     console.log "serve"
@@ -64,9 +75,7 @@ class Racket extends Base
 
     if index != -1
       @catched_objects.splice index, 1
-      ball.mass = ball.last_mass
-      ball.last_mass = undefined
-      ball.updateMassProperties()
+      ball.setStatic false
 
       console.log window.Game.settings
       point = new CANNON.Vec3 0, 0, 1
