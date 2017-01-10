@@ -41,7 +41,7 @@
   FAR = @settings.FAR
 
   @camera = new THREE.PerspectiveCamera VIEW_ANGLE, ASPECT, NEAR, FAR
-  @camera.position.set 0, 400, 1700
+  @camera.position.set 0, 400, 1600
   # camera.position.set 0, -150, 400
   @camera.lookAt @scene.position
   @scene.add @camera

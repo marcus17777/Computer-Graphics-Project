@@ -115,7 +115,7 @@ class @Game
   racket = new @Racket
     serving_force: -200000
     callback: (obj) =>
-      obj.position.set 50, 100, 0
+      obj.position.set 0, 200, 510
       @addMeshBody obj
       obj.quaternion.setFromVectors new CANNON.Vec3(-1, 1, 0), new CANNON.Vec3(0, -1, -1)
       # obj.catch(ball)
@@ -153,7 +153,7 @@ class @Game
   table = new @Table
     callback: (obj) =>
       @addMeshBody obj
-      obj.position.set 0,10,0
+      obj.position.set 0,100,0
 
 
       contact = new CANNON.ContactMaterial obj.material, ball.material,

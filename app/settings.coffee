@@ -12,9 +12,8 @@
 
   # Camera specific options
   VIEW_ANGLE : 45
-  ASPECT : undefined
   NEAR : 0.1
-  FAR : 20000
+  FAR : 10000
 
 
   ## Cannon.js options
