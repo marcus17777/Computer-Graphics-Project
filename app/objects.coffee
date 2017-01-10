@@ -41,6 +41,8 @@ class Ball extends Base
     @shape = new CANNON.Sphere @radius
     @mesh = new THREE.Mesh geometry, material
 
+
+
 @Game.Ball = Ball
 
 
@@ -62,8 +64,9 @@ class Racket extends Base
 
   catch: (ball) ->
     # console.log "catch"
-    # console.log ball
+    console.log ball
     # console.log @catched_objects
+    ball.position.y =ball.position.y+15
     index = @catched_objects.indexOf ball
 
     if index == -1
@@ -92,6 +95,7 @@ class Racket extends Base
   update: () ->
     for obj in @catched_objects
       obj.position.copy this.position
+
     super()
 
   initModel: (callback) ->
@@ -162,7 +166,9 @@ class RacketBot extends Racket
     if @tracking?
       position = new CANNON.Vec3().copy @tracking.position
       position.z = this.position.z
+
       this.position.copy position
+
     super()
 
   setTrack: (obj) ->
