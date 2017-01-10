@@ -1,6 +1,6 @@
 @Game.settings = {
 
-  DEBUG: true
+  DEBUG: false
 
   # Appcontainer: an element in html document that holds our 3D application
   containerID : 'appContainer'

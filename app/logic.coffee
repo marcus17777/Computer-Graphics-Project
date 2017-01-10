@@ -28,6 +28,9 @@ class Logic
 
   newRound: () ->
     @server = @next_server
+    if @server == 'opponent'
+      @ball.position.copy @opponent.initPosition
+
     @server_obj.catch @ball
     @rounds.push new Round
 
@@ -81,8 +84,8 @@ class Logic
       target = @server_obj
       if event.which == 1
         target.serve(@ball)
-      else if event.which == 3
-        target.catch(@ball)
+      # else if event.which == 3
+      #   target.catch(@ball)
 
 
     @ball.addEventListener 'collide', (event) =>

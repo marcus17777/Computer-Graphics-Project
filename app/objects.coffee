@@ -21,6 +21,9 @@ class Ball extends Base
     @out_of_bound_callback = undefined
     @boundingBox = undefined
 
+  @property 'static',
+    get: -> @mass == 0
+
   setStatic: (bool) ->
     if bool
       @last_mass = @mass
@@ -42,7 +45,7 @@ class Ball extends Base
     @boundingBox = undefined
 
   checkbounds: () ->
-    if !@boundingBox.containsPoint @position
+    if !@boundingBox.containsPoint @position && !@static
       @out_of_bound_callback()
 
   update: () ->

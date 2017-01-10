@@ -113,7 +113,7 @@ class @Game
   #     @addMeshBody obj
 
   racket = new @Racket
-    serving_force: -400000
+    serving_force: -200000
     callback: (obj) =>
       obj.position.set 50, 100, 0
       @addMeshBody obj
@@ -135,7 +135,7 @@ class @Game
 
 
   racketBot = new @RacketBot
-    serving_force: 400000
+    serving_force: 200000
     callback: (obj) =>
       obj.setTrack ball
       obj.position.set 0, 200, -510
