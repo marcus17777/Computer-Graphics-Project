@@ -95,17 +95,7 @@ class Racket extends Base
 
   update: () ->
     for obj in @catched_objects
-      
-
-      obj.position.z == this.position.z+1
-      obj.position.x == this.position.x+2
-      obj.position.y == this.position.y+2
-
-      # obj.position.z.copy this.position.z
-      # obj.position.x.copy this.position.x
-      # obj.position.y.copy this.position.y
-
-      # obj.position.copy this.position
+      obj.position.copy this.position
     super()
 
   initModel: (callback) ->
@@ -163,6 +153,8 @@ class Racket extends Base
 
 @Game.Table = Table
 
+
+
 class RacketBot extends Racket
   constructor: (args) ->
     super(args)
@@ -172,7 +164,7 @@ class RacketBot extends Racket
 
   update: () ->
     if @tracking?
-      position=new CANNON.Vec3().copy @tracking.position
+      position = new CANNON.Vec3().copy @tracking.position
       position.z = this.position.z
       this.position.copy position
     super()
@@ -183,4 +175,4 @@ class RacketBot extends Racket
   removeTrack: () ->
     @tracking = undefined
 
-@Game.RacketBot= RacketBot
+@Game.RacketBot = RacketBot

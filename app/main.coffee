@@ -94,7 +94,7 @@ class @Game
 
   ball = new @Ball
     radius: 10
-    mass: 0.5
+    mass: 100
     callback: (obj) =>
       obj.position.set 0, 100, 0
       @addMeshBody obj
@@ -113,6 +113,12 @@ class @Game
       @addMeshBody obj
       obj.quaternion.setFromVectors new CANNON.Vec3(-1, 1, 0), new CANNON.Vec3(0, -1, -1)
       obj.catch(ball)
+      obj.mesh.material.opacity = 0.5
+      console.log ball.material
+      contact = new CANNON.ContactMaterial obj.material, ball.material,
+        friction: 0.0
+        restitution: 1.0
+      @world.addContactMaterial contact
 
 
       # @helper = new THREE.BoundingBoxHelper(racket.mesh, 0xff0000)
@@ -125,9 +131,6 @@ class @Game
 
 
   racketbot = new @RacketBot
-
-
-
     serving_force: 4000
     callback: (obj) =>
       obj.setTrack ball
@@ -135,26 +138,23 @@ class @Game
       @addMeshBody obj
       obj.quaternion.setFromVectors new CANNON.Vec3(-1, 1, 0), new CANNON.Vec3(0, -1, -1)
 
+      contact = new CANNON.ContactMaterial obj.material, ball.material,
+        friction: 0.0
+        restitution: 1.0
+      @world.addContactMaterial contact
+
 
 
   table = new @Table
     callback: (obj) =>
       @addMeshBody obj
 
+      contact = new CANNON.ContactMaterial obj.material, ball.material,
+        friction: 0.0
+        restitution: 1.0
+      @world.addContactMaterial contact
 
-  tableball = new CANNON.ContactMaterial table, ball.material,
-      friction: 0.0
-      restitution: 1.0
-  racketball = new CANNON.ContactMaterial racket, ball.material,
-      friction: 0.0
-      restitution: 1.0
-  racketbotball = new CANNON.ContactMaterial racketbot, ball.material,
-      friction: 0.0
-      restitution: 1.0
 
-  @world.addContactMaterial tableball
-  @world.addContactMaterial racketball
-  @world.addContactMaterial racketbotball
 
 
 
