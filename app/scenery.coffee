@@ -35,6 +35,10 @@
   light.position.set 0, 250, 0
   @scene.add light
 
+  light2 = new THREE.PointLight 0xffffff
+  # light = new THREE.AmbientLight 0x111111
+  light2.position.set -200, 250, 0
+  @scene.add light2
 
 @Game.initThree = () ->
   # Scene initialization
@@ -47,7 +51,7 @@
   FAR = @settings.FAR
 
   @camera = new THREE.PerspectiveCamera VIEW_ANGLE, ASPECT, NEAR, FAR
-  @camera.position.set 0, 150, 400
+  @camera.position.set 0, 400, 1700
   # camera.position.set 0, -150, 400
   @camera.lookAt @scene.position
   @scene.add @camera

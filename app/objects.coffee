@@ -17,7 +17,7 @@ class Ball extends Base
     super(args)
 
     @angularDamping = 0.1
-    
+
 
 
   setStatic: (bool) ->
@@ -95,7 +95,17 @@ class Racket extends Base
 
   update: () ->
     for obj in @catched_objects
-      obj.position.copy this.position
+      
+
+      obj.position.z == this.position.z+1
+      obj.position.x == this.position.x+2
+      obj.position.y == this.position.y+2
+
+      # obj.position.z.copy this.position.z
+      # obj.position.x.copy this.position.x
+      # obj.position.y.copy this.position.y
+
+      # obj.position.copy this.position
     super()
 
   initModel: (callback) ->
