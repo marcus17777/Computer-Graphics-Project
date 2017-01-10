@@ -1,25 +1,48 @@
-
-
-
 class Logic
   constructor: () ->
     @Game = window.Game
     @settings = @Game.settings
 
     @rounds = []
+    @ball_bounds = new THREE.Box3 new THREE.Vector3(-2048, -2048, -2048), new THREE.Vector3(2048, 2048, 2048)
+
+    @server = ['player', 'opponent'].randomChoice()
 
   @property 'current_round',
     get: -> @rounds.last()
 
+  @property 'next_server',
+    get: ->
+      if @server == 'player'
+        console.log 'opponent'
+        server = 'opponent'
+      else if @server == 'opponent'
+        console.log 'player'
+        server = 'player'
+      return server
+
+  @property 'server_obj',
+    get: ->
+      @[@server]
+
+
   newRound: () ->
+    @server = @next_server
+    @server_obj.catch @ball
     @rounds.push new Round
+
+  endRound: () ->
+    if !@current_round.winner?
+      @current_round.end(@ball.last_touch)
+      @newRound()
+
 
   run: () ->
     @initEventHandlers()
-    @newRound()
+    @ball.setbounds @ball_bounds, () =>
+      @endRound()
 
-    console.log @rounds
-    console.log @current_round
+    @newRound()
 
   addPlayer: (obj) ->
     @player = obj
@@ -55,7 +78,7 @@ class Logic
       self.player.position.set pos.x, pos.y, pos.z
 
     document.getElementById(@settings.containerID).addEventListener 'mouseup', (event) =>
-      target = @opponent
+      target = @server_obj
       if event.which == 1
         target.serve(@ball)
       else if event.which == 3
@@ -65,15 +88,28 @@ class Logic
     @ball.addEventListener 'collide', (event) =>
       switch event.body
         when @player
-          console.log 'player'
+          @ball.last_touch = 'player'
         when @opponent
-          console.log 'opponent'
+          @ball.last_touch = 'opponent'
         when @environment
-          console.log 'fell off'
+          @endRound()
 
 
 @Game.Logic = Logic
 
+
 class Round
+  @score: {}
+
   constructor: () ->
-    @
+    @winner = undefined
+
+  end: (winner) ->
+    Round.score[winner] = (Round.score[winner] || 0) + 1
+    @winner = winner
+
+  @property 'total_rounds',
+    get: -> Object.values(Round.score).reduce (a, b) -> a + b
+
+  @get_score: (key) ->
+    return Round.score[key] || 0

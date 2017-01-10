@@ -1,6 +1,6 @@
 @Game.settings = {
 
-  DEBUG: false
+  DEBUG: true
 
   # Appcontainer: an element in html document that holds our 3D application
   containerID : 'appContainer'
@@ -23,6 +23,6 @@
     'y' : -9.8
     'z' : 0
   }
-  TIMESTEP : 1 / 60
+  TIMESTEP : 1 / 10  #1 / 60
 
 }

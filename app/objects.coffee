@@ -18,7 +18,8 @@ class Ball extends Base
 
     @angularDamping = 0.1
 
-
+    @out_of_bound_callback = undefined
+    @boundingBox = undefined
 
   setStatic: (bool) ->
     if bool
@@ -31,6 +32,22 @@ class Ball extends Base
       @mass = @last_mass
       @last_mass = undefined
       @updateMassProperties()
+
+  setbounds: (boundingBox, out_of_bound_callback) ->
+    @out_of_bound_callback = out_of_bound_callback
+    @boundingBox = boundingBox
+
+  removebounds: () ->
+    @out_of_bound_callback = undefined
+    @boundingBox = undefined
+
+  checkbounds: () ->
+    if !@boundingBox.containsPoint @position
+      @out_of_bound_callback()
+
+  update: () ->
+    @checkbounds()
+    super()
 
 
 

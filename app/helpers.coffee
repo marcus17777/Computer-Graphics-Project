@@ -36,5 +36,8 @@ class @HttpClient
 Array::last ?= () ->
   return this[this.length - 1]
 
+Array::randomChoice ?= () ->
+  this[Math.floor(this.length * Math.random())]
+
 Function::property ?= (prop, desc) ->
   Object.defineProperty @::, prop, desc
