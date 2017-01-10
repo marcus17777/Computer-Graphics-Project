@@ -22,23 +22,13 @@
 
 
   # GUI: For easy variable changing and overall control of the application
-  @gui = new dat.GUI
-  @gui_parameters = {
+  gui = new dat.GUI
+  settings = gui.addFolder 'Settings'
+  settings.add @settings, 'TIMESTEP'
+  # settings.open()
 
-  }
-  @gui.open()
 
-
-  # Light source for our world
-  light = new THREE.PointLight 0xffffff
-  # light = new THREE.AmbientLight 0x111111
-  light.position.set 0, 250, 0
-  @scene.add light
-
-  light2 = new THREE.PointLight 0xffffff
-  # light = new THREE.AmbientLight 0x111111
-  light2.position.set -200, 250, 0
-  @scene.add light2
+  @gui = gui
 
 @Game.initThree = () ->
   # Scene initialization
@@ -69,7 +59,20 @@
   THREEx.FullScreen.bindKey charCode: 'm'.charCodeAt(0)
 
   # Controls for moving around using mouse.
-  @controls = new THREE.OrbitControls @camera, @renderer.domElement
+  if @settings.DEBUG
+    @controls = new THREE.OrbitControls @camera, @renderer.domElement
+
+  # Light source for our world
+  light = new THREE.PointLight 0xffffff
+  # light = new THREE.AmbientLight 0x111111
+  light.position.set 0, 250, 0
+  @scene.add light
+
+  light2 = new THREE.PointLight 0xffffff
+  # light = new THREE.AmbientLight 0x111111
+  light2.position.set -200, 250, 0
+  @scene.add light2
+
 
 @Game.render = () ->
   @renderer.render @scene, @camera
@@ -77,5 +80,6 @@
 @Game.updateGUI = () ->
   @delta = @clock.getDelta
 
-  @controls.update()
+  if @settings.DEBUG
+    @controls.update()
   @stats.update()

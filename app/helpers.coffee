@@ -31,3 +31,10 @@ class @HttpClient
 
     httpRequest.open 'GET', url, true
     httpRequest.send null
+
+
+Array::last ?= () ->
+  return this[this.length - 1]
+
+Function::property ?= (prop, desc) ->
+  Object.defineProperty @::, prop, desc

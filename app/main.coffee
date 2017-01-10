@@ -4,12 +4,18 @@ class @Game
     cannonDebugRenderer = undefined
 
 
+@Game.initGameLogic = () ->
+  @logic = new @Logic
+
+
+
 @Game.init = () ->
   console.log "init"
   @initThree()
   @initCannon()
   @initGUI()
 
+  @initGameLogic()
 
   console.log @scene
   console.log @world
@@ -21,6 +27,7 @@ class @Game
   @objects = new CANNON.Group
   @initGeometry()
 
+  @logic.run()
   @update()
 
 
@@ -125,10 +132,9 @@ class @Game
       # console.log @helper
       # @objects.add @helper
 
-  @racket = racket
 
 
-  racketbot = new @RacketBot
+  racketBot = new @RacketBot
     serving_force: 40000
     callback: (obj) =>
       obj.setTrack ball
@@ -155,40 +161,8 @@ class @Game
 
 
 
-
-
-
-
-
-
-
-  self = @
-  document.getElementById(@settings.containerID).addEventListener 'mousemove', (event) ->
-
-    X = (event.pageX - this.offsetLeft) - this.offsetWidth / 2
-    Y = (event.pageY - this.offsetTop) - this.offsetHeight / 2
-    X = (X / this.offsetWidth) * 2 #- 1
-    Y = -(Y / this.offsetHeight) * 2 #+ 1
-    Z = -0
-    pos = new THREE.Vector3 X, Y, Z
-
-    pos.unproject(self.camera)
-    dir = pos.clone().sub(self.camera.position).normalize()
-    pos.add dir.clone().multiplyScalar(1000)
-
-    racket.position.set pos.x, pos.y, pos.z
-
-  document.getElementById(@settings.containerID).addEventListener 'mouseup', (event) ->
-    if event.which == 1
-      racketbot.serve(ball)
-    else if event.which == 3
-      racketbot.catch(ball)
-
-  ball.addEventListener 'collide', (event) ->
-    switch event.body
-      when racket
-        console.log 'racket'
-      when racketbot
-        console.log 'racketbot'
-      when groundBody
-        console.log 'fell off'
+  @logic.addPlayer racket
+  @logic.addOpponent racketBot
+  @logic.addBall ball
+  @logic.addTable table
+  @logic.addEnvironment groundBody
