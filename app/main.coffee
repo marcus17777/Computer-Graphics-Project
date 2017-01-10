@@ -21,9 +21,6 @@ class @Game
   @objects = new CANNON.Group
   @initGeometry()
 
-
-
-
   @update()
 
 
@@ -42,7 +39,8 @@ class @Game
 
 @Game.addMeshBody = (obj) ->
   @world.add obj
-  @scene.add obj.mesh
+  if obj.mesh?
+    @scene.add obj.mesh
   @objects.add obj
 
 
@@ -70,20 +68,21 @@ class @Game
   sphereGeometry = new THREE.SphereGeometry size, 32, 16
   sphereMaterial = new THREE.MeshLambertMaterial color: 0x8888ff
 
-  loader = new THREE.TextureLoader
-  groundTexture = loader.load 'images/checkerboard.jpg'
-  groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping
-  groundTexture.repeat.set 100, 100
+  # loader = new THREE.TextureLoader
+  # groundTexture = loader.load 'images/checkerboard.jpg'
+  # groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping
+  # groundTexture.repeat.set 100, 100
 
-  groundGeometry = new THREE.PlaneGeometry 10000, 10000, 1, 1
-  groundMaterial = new THREE.MeshBasicMaterial map: groundTexture, side: THREE.DoubleSide
-  groundMesh = new THREE.Mesh groundGeometry, groundMaterial
-  console.log groundMesh
+  # groundGeometry = new THREE.PlaneGeometry 10000, 10000, 1, 1
+  # # groundMaterial = new THREE.MeshBasicMaterial map: groundTexture, side: THREE.DoubleSide
+  # groundMaterial = new THREE.MeshBasicMaterial color: 0x000000
+  #
+  # groundMesh = new THREE.Mesh groundGeometry, groundMaterial
+  # console.log groundMesh
 
   groundMaterial = new CANNON.Material
   groundShape = new CANNON.Plane
-  groundBody = new CANNON.MeshBody
-    mesh: groundMesh
+  groundBody = new CANNON.Body
     mass: 0
     material: groundMaterial
   groundBody.addShape groundShape
@@ -112,9 +111,8 @@ class @Game
       obj.position.set 50, 100, 0
       @addMeshBody obj
       obj.quaternion.setFromVectors new CANNON.Vec3(-1, 1, 0), new CANNON.Vec3(0, -1, -1)
-      obj.catch(ball)
+      # obj.catch(ball)
       obj.mesh.material.opacity = 0.5
-      console.log ball.material
       contact = new CANNON.ContactMaterial obj.material, ball.material,
         friction: 0.0
         restitution: 1.0
@@ -131,12 +129,13 @@ class @Game
 
 
   racketbot = new @RacketBot
-    serving_force: 4000
+    serving_force: 40000
     callback: (obj) =>
       obj.setTrack ball
       obj.position.set 0, 200, 0
       @addMeshBody obj
       obj.quaternion.setFromVectors new CANNON.Vec3(-1, 1, 0), new CANNON.Vec3(0, -1, -1)
+      obj.catch ball
 
       contact = new CANNON.ContactMaterial obj.material, ball.material,
         friction: 0.0
@@ -181,6 +180,15 @@ class @Game
 
   document.getElementById(@settings.containerID).addEventListener 'mouseup', (event) ->
     if event.which == 1
-      racket.serve(ball)
+      racketbot.serve(ball)
     else if event.which == 3
-      racket.catch(ball)
+      racketbot.catch(ball)
+
+  ball.addEventListener 'collide', (event) ->
+    switch event.body
+      when racket
+        console.log 'racket'
+      when racketbot
+        console.log 'racketbot'
+      when groundBody
+        console.log 'fell off'

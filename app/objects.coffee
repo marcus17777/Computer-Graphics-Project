@@ -21,17 +21,13 @@ class Ball extends Base
 
 
   setStatic: (bool) ->
-    console.log bool
     if bool
-      console.log 'setStatic'
       @last_mass = @mass
       @mass = 0
       @velocity.set 0, 0, 0
       @angularVelocity.set 0, 0, 0
       @updateMassProperties()
-
     else
-      console.log 'remove static'
       @mass = @last_mass
       @last_mass = undefined
       @updateMassProperties()
