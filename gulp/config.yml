@@ -1,39 +1,5 @@
----
-isProduction:   false
-isDebug:        false
-
-dist:
-  root: dist
-  lib:
-    root: dist/lib
-
-  index: dist/index.html
-  appJs: dist/app.js
-  appCss: dist/app.css
-  libJs:  dist/lib.js
-  libCss: dist/lib.css
-  injectables:
-    - dist/lib-*.{js,css}
-    - dist/app-*.{js,css}
-
 app:
   root:       app
-  dest:       './'
-  coffee:     app/**/!(*Spec).coffee
+  coffee:     app/**/*.coffee
   js:         app/!(lib)/**/*.js*]
-  compiledJs: /app-*.js
-  css:        [/!(lib)/**/*.css, /app-*.css]
-  html:       app/**/*.html
   indexHtml:  app/index.html
-  injectables:
-    - app/lib/*.css
-    - app/lib/**/*.js
-    - app/**/*.css
-    - app/helpers.js
-    - app/constants.js
-    - app/**/*.js
-
-lib:
-  root: app/lib
-  js:   []
-  css:  []

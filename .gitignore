@@ -1,5 +1,7 @@
 node_modules
+old_stuff
 app/**/*.js
-!app/lib/**
+!app/lib/**/*.js
 dist
 .idea
+fabfile.py

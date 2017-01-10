@@ -1,99 +1,118 @@
-scene = undefined
-camera = undefined
-renderer = undefined
-group = undefined
-
-
-class Cube extends THREE.Mesh
+class Logic
   constructor: () ->
-    geometry = new THREE.BoxGeometry(1, 1, 1)
-    material = new THREE.MeshFaceMaterial([
-         new THREE.MeshBasicMaterial(color: 0x09dcff),
-         new THREE.MeshBasicMaterial(color: 0x13de69),
-         new THREE.MeshBasicMaterial(color: 0x88a3f4),
-         new THREE.MeshBasicMaterial(color: 0x8042cd),
-         new THREE.MeshBasicMaterial(color: 0x649c60),
-         new THREE.MeshBasicMaterial(color: 0x772c13),
-    ])
-    super(geometry, material)
+    @Game = window.Game
+    @settings = @Game.settings
 
-    @speed = {
-      'x': 0.0,
-      'y': 0.0,
-      'z': 0.0,
-    }
+    @rounds = []
+    @ball_bounds = new THREE.Box3 new THREE.Vector3(-2048, -2048, -2048), new THREE.Vector3(2048, 2048, 2048)
 
-    @rotation_speed = {
-      'x': 0.0,
-      'y': 0.0,
-      'z': 0.0,
-    }
+    @server = ['player', 'opponent'].randomChoice()
 
-  update: (ms) ->
-    this.position.x += @speed.x
-    this.position.y += @speed.y
-    this.position.z += @speed.z
-    this.rotation.x += @rotation_speed.x
-    this.rotation.y += @rotation_speed.y
-    this.rotation.z += @rotation_speed.z
+  @property 'current_round',
+    get: -> @rounds.last()
 
-  setpos: (x, y, z) ->
-    this.position.x = x
-    this.position.y = y
-    this.position.z = z
+  @property 'next_server',
+    get: ->
+      if @server == 'player'
+        console.log 'opponent'
+        server = 'opponent'
+      else if @server == 'opponent'
+        console.log 'player'
+        server = 'player'
+      return server
+
+  @property 'server_obj',
+    get: ->
+      @[@server]
 
 
-class Group
+  newRound: () ->
+    @server = @next_server
+    if @server == 'opponent'
+      @ball.position.copy @opponent.initPosition
+
+    @server_obj.catch @ball
+    @rounds.push new Round
+
+  endRound: () ->
+    if !@current_round.winner?
+      @current_round.end(@ball.last_touch)
+      @newRound()
+
+
+  run: () ->
+    @initEventHandlers()
+    @ball.setbounds @ball_bounds, () =>
+      @endRound()
+
+    @newRound()
+
+  addPlayer: (obj) ->
+    @player = obj
+
+  addOpponent: (obj) ->
+    @opponent = obj
+
+  addBall: (obj) ->
+    @ball = obj
+    console.log @ball
+
+  addEnvironment: (obj) ->
+    @environment = obj
+
+  addTable: (obj) ->
+    @table = obj
+
+  initEventHandlers: () ->
+    self = @
+    document.getElementById(@settings.containerID).addEventListener 'mousemove', (event) ->
+
+      X = (event.pageX - this.offsetLeft) - this.offsetWidth / 2
+      Y = (event.pageY - this.offsetTop) - this.offsetHeight / 2
+      X = (X / this.offsetWidth) * 2 #- 1
+      Y = -(Y / this.offsetHeight) * 2 #+ 1
+      Z = -0
+      pos = new THREE.Vector3 X, Y, Z
+
+      pos.unproject(self.Game.camera)
+      dir = pos.clone().sub(self.Game.camera.position).normalize()
+      pos.add dir.clone().multiplyScalar(1000)
+
+      self.player.position.set pos.x, pos.y, pos.z
+
+    document.getElementById(@settings.containerID).addEventListener 'mouseup', (event) =>
+      target = @server_obj
+      if event.which == 1
+        target.serve(@ball)
+      # else if event.which == 3
+      #   target.catch(@ball)
+
+
+    @ball.addEventListener 'collide', (event) =>
+      switch event.body
+        when @player
+          @ball.last_touch = 'player'
+        when @opponent
+          @ball.last_touch = 'opponent'
+        when @environment
+          @endRound()
+
+
+@Game.Logic = Logic
+
+
+class Round
+  @score: {}
+
   constructor: () ->
-    @objects = []
+    @winner = undefined
 
-  add: (obj) ->
-    @objects.push obj
+  end: (winner) ->
+    Round.score[winner] = (Round.score[winner] || 0) + 1
+    @winner = winner
 
-  update: (ms) ->
-    for obj in @objects
-      obj.update ms
+  @property 'total_rounds',
+    get: -> Object.values(Round.score).reduce (a, b) -> a + b
 
-  addToScene: (scene) ->
-    for obj in @objects
-      scene.add obj
-
-
-
-
-
-render = ->
-  requestAnimationFrame render
-  group.update 1
-  renderer.render scene, camera
-  return
-
-@onLoad = () ->
-  scene = new THREE.Scene
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-  renderer = new THREE.WebGLRenderer
-
-  renderer.setSize window.innerWidth, window.innerHeight
-  document.body.appendChild renderer.domElement
-
-  group = new Group
-
-  cube = new Cube
-  cube2 = new Cube
-
-  cube.setpos 5,5,0
-  cube.rotation_speed.x = 0.01
-
-  cube2.speed.x = 0.01
-  cube2.rotation_speed.y = 0.1
-  cube2.setpos -5,5,0
-  #cube2.rotation_speed.y = -0.01
-
-
-  group.add cube
-  group.add cube2
-
-  group.addToScene scene
-
-  camera.position.z = 10
-  render()
+  @get_score: (key) ->
+    return Round.score[key] || 0

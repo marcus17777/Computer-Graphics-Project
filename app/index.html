@@ -1,144 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>ship_triangle OBJloader</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-  <style>
-    body {
-      font-family: Monospace;
-      background-color: #000;
-      color: #fff;
-      margin: 0px;
-      overflow: hidden;
-    }
-    #info {
-      color: #fff;
-      position: absolute;
-      top: 10px;
-      width: 100%;
-      text-align: center;
-      z-index: 100;
-      display:block;
-    }
-    #info a, .button { color: #f00; font-weight: bold; text-decoration: underline; cursor: pointer }
-  </style>
-</head>
+<!DOCTYPE>
+<html>
+	<head>
+		<title>Computer Graphics Project - PingPong game</title>
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				font-family: Monospace;
+				font-weight: bold;
+				background-color: #ccccff;
+				margin: 0px;
+				overflow: hidden;
+			}
 
-<body>
-  <div id="info">
-          OBJ loader
-  </div>
+			.appContainer {
+				z-index: 1;
+				position: absolute;
+				left:0px;
+				top:0px
+			}
+		</style>
 
-  <script src="http://threejs.org/build/three.min.js"></script>
-  <script src="http://threejs.org/examples/js/loaders/OBJLoader.js"></script>
-  <script src="http://threejs.org/examples/js/loaders/MTLLoader.js"></script>
 
-  <script src="http://threejs.org/examples/js/Detector.js"></script>
-  <script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
+		<!-- inject:js -->
+		<script src="lib/DAT.GUI.min.js"></script>
+		<script src="lib/Detector.js"></script>
+		<script src="lib/Stats.js"></script>
+		<script src="lib/THREE.r82-tweaked.js"></script>
+		<script src="lib/cannon.js"></script>
+		<script src="lib/cannondebugrenderer.js"></script>
+		<script src="lib/THREEx.FullScreen.js"></script>
+		<script src="lib/THREEx.KeyboardState.js"></script>
+		<script src="lib/THREEx.WindowResize.js"></script>
+		<script src="lib/three.ColladaLoader.js"></script>
+		<script src="lib/three.MTLLoader.js"></script>
+		<script src="lib/three.OBJLoader.js"></script>
+		<script src="lib/three.OrbitControls.js"></script>
+		<script src="lib/three.Projector.js"></script>
+		<script src="main.js"></script>
+		<script src="lib/models/bunny.js"></script>
+		<script src="helpers.js"></script>
+		<script src="main.js"></script>
+		<script src="logic.js"></script>
+		<script src="physics.js"></script>
+		<script src="scenery.js"></script>
+		<script src="objects.js"></script>
+		<script src="settings.js"></script>
+		<script src="logic.js"></script>
+		<script src="shaders.js"></script>
+		<!-- endinject -->
 
-  <script>
-    var clock = new THREE.Clock();
-    var delta = clock.getDelta(); // secondsangry
-    var rotateAngle = Math.PI / 2 * delta;   // pi/2 radians (90 degrees) per second
-    var container, stats;
+		<!--
+			--Task--
+			Fill the Gouraud and Phong vertex and fragment shaders.
+			When doing the calculations with points, make sure you are in the camera/eye coordinate space.
+			The vertex positions and normals sent (by Three.js) to the vertex shader are initially in the local coordinate space.
+			Three.js provides you with a modelViewMatrix (mat4) and a normalMatrix (mat3) for each vertex of each object.
+			Those transform from the object space to camera space.
+		-->
 
-    var camera, scene, renderer;
+	</head>
 
-    var mouseX = 0, mouseY = 0;
 
-    var windowHalfX = window.innerWidth / 2;
-    var windowHalfY = window.innerHeight / 2;
 
-    var obj;
+	<body onload="window.Game.init()">
 
-    init();
-    animate();
 
-    function init() {
 
-      container = document.createElement( 'div' );
-      container.style.cssText = 'cursor: none;';
-      document.body.appendChild( container );
-
-      camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
-      camera.position.z = 600;
-
-      // scene
-
-      scene = new THREE.Scene();
-
-      var ambient = new THREE.AmbientLight( 0x101030 );
-      scene.add( ambient );
-
-      var directionalLight = new THREE.DirectionalLight( 0xffeedd );
-      directionalLight.position.set( 0, 0, 1 );
-      scene.add( directionalLight );
-
-      // texture
-
-      var manager = new THREE.LoadingManager();
-      manager.onProgress = function ( item, loaded, total ) {
-
-        console.log( item, loaded, total );
-
-      };
-
-      var mtlLoader = new THREE.MTLLoader();
-      mtlLoader.crossOrigin = 'Anonymous';
-      mtlLoader.load('models/reket2.mtl',
-        function(materials) {
-        var objLoader = new THREE.OBJLoader();
-        objLoader.crossOrigin = 'Anonymous';
-        objLoader.setMaterials(materials);
-        objLoader.load('models/reket2.obj', function (object) {
-          object.position.x = -60;
-          object.rotation.x = -20;
-          object.scale.x = 30;
-          object.scale.y = 30;
-          object.scale.z = 30;
-          obj = object
-          scene.add( obj );
-        });
-      });
-
-      renderer = new THREE.WebGLRenderer();
-      renderer.setSize( window.innerWidth, window.innerHeight );
-      container.appendChild( renderer.domElement );
-
-      document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-
-      window.addEventListener( 'resize', onWindowResize, false );
-
-    }
-
-    function onWindowResize() {
-      windowHalfX = window.innerWidth / 2;
-      windowHalfY = window.innerHeight / 2;
-
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-
-      renderer.setSize( window.innerWidth, window.innerHeight );
-    }
-
-    function onDocumentMouseMove( event ) {
-      mouseX = ( event.clientX - windowHalfX ) / 2;
-      mouseY = ( event.clientY - windowHalfY ) / 2;
-      obj.position.x = mouseX;
-      obj.position.y = -mouseY;
-    }
-
-    function animate() {
-      requestAnimationFrame( animate );
-      render();
-    }
-
-    function render() {
-      camera.lookAt( scene.position );
-
-      renderer.render( scene, camera );
-    }
-  </script>
-</body>
+		<div id="appContainer"></div>
+		<div id="statusContainer"></div>
+	</body>
 </html>

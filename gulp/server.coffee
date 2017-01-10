@@ -1,10 +1,7 @@
 module.exports = ($) ->
   require('util')._extend @, $
 
-  fs = require('fs')
-  proxyMiddleware = require 'http-proxy-middleware'
-
-  @gulp.task 'serve', ['build', 'watch'], =>
+  @gulp.task 'serve', ['clean', 'compile'], =>
 
     fallback = @config.app.indexHtml
     root     = @config.app.root
@@ -15,14 +12,6 @@ module.exports = ($) ->
       livereload: true
       fallback: fallback
 
-  @gulp.task 'watch', ['watch:coffee', 'watch:compiled']
-
-  @gulp.task 'watch:coffee', ['coffee'], =>
+  @gulp.task 'compile', ['compile:coffee'], =>
     @gulp.watch @config.app.root + '/**/*.coffee', (event) ->
-      if event.type == 'added'
-        @gulp.start 'inject'
-      else
-        @gulp.start 'coffee'
-
-  @gulp.task 'watch:compiled', =>
-    @gulp.watch @config.app.root + @config.app.js, -> @connect.reload()
+      @gulp.start 'compile:coffee'
