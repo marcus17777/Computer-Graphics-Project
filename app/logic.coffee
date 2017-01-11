@@ -6,7 +6,8 @@ class Logic
     @rounds = []
     @ball_bounds = new THREE.Box3 new THREE.Vector3(-2048, -2048, -2048), new THREE.Vector3(2048, 2048, 2048)
 
-    @server = ['player', 'opponent'].randomChoice()
+    # @server = ['player', 'opponent'].randomChoice()
+    @server = 'opponent'
 
   @property 'current_round',
     get: -> @rounds.last()
